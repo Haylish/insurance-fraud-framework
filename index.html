@@ -425,7 +425,16 @@ footer a:hover{border-color:var(--cyan)}
     <button class="xbtn ghost" id="exLink">Copy share link</button>
   </div>
   <p class="exportnote">Navigator layer only includes techniques on a real F3 tactic column &mdash; new <code style="color:var(--amber)">IF####</code> techniques and anything under IFF&rsquo;s two new tactics aren&rsquo;t part of MITRE&rsquo;s published data, but stay fully described in the other exports.</p>
+
+  <div class="field" style="margin-top:18px;padding-top:18px;border-top:1px solid var(--line)">
+    <label>Import a case</label>
+    <input type="file" id="importFile" accept="application/json,.json" style="display:none">
+    <button class="xbtn ghost full" id="importJsonBtn">Import JSON&hellip;</button>
+    <p class="exportnote">Loads a previously exported case JSON as a new saved case &mdash; useful for picking up work on a different machine or browser. Also accepts an exported coverage JSON, which merges into your detection coverage instead.</p>
+  </div>
+
   <p class="exportnote"><button class="xbtn ghost" id="clearCase" style="margin-top:8px;width:100%">Clear this case</button></p>
+  <p class="exportnote"><button class="xbtn ghost" id="resetAll" style="margin-top:4px;width:100%;color:var(--gap);border-color:rgba(241,101,101,.35)">Reset everything (all cases &amp; coverage)</button></p>
 </aside>
 
 <aside class="covpanel" id="covpanel" role="dialog" aria-modal="true" aria-labelledby="cov-title">
@@ -824,6 +833,62 @@ document.getElementById('clearCase').addEventListener('click',()=>{
   if(!confirm('Clear all selected techniques and details for this case?'))return;
   const c=activeCase(); c.ref=''; c.analyst=''; c.summary=''; c.techniques={}; c.updated=Date.now();
   saveLibrary(); openCasePanelFields(); renderSelection();
+});
+
+/* ---- import (case JSON or coverage JSON) ---- */
+const importFile=document.getElementById('importFile');
+document.getElementById('importJsonBtn').addEventListener('click',()=>importFile.click());
+importFile.addEventListener('change',(e)=>{
+  const file=e.target.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=()=>{
+    let data;
+    try{ data=JSON.parse(reader.result); }
+    catch(err){ showToast('Could not read that file — not valid JSON'); importFile.value=''; return; }
+
+    if(Array.isArray(data.coverage)){
+      // coverage export format
+      let applied=0, skipped=0;
+      data.coverage.forEach(item=>{
+        if(item && item.id && item.level && techById[item.id]){ coverage[item.id]=item.level; applied++; }
+        else skipped++;
+      });
+      saveCoverage(); renderCoverageDots(); renderCovButtons(); renderCovSummary();
+      showToast(`Coverage imported — ${applied} set${skipped?`, ${skipped} skipped`:''}`);
+    } else if(data.case && Array.isArray(data.techniques)){
+      // case export format
+      const techniques={}; let applied=0, skipped=0;
+      data.techniques.forEach(t=>{
+        if(t && t.id && techById[t.id]){ techniques[t.id]={notes:t.analyst_notes||''}; applied++; }
+        else skipped++;
+      });
+      const c=newCaseObj({
+        ref:(data.case.reference||'')+' (imported)',
+        analyst:data.case.analyst||'',
+        summary:data.case.summary||'',
+        techniques
+      });
+      library[c.id]=c; activeId=c.id; saveLibrary();
+      openCasePanelFields(); renderSelection();
+      showToast(`Case imported — ${applied} technique(s)${skipped?`, ${skipped} unrecognised`:''}`);
+    } else {
+      showToast('Unrecognised file — expected an IFF case or coverage export');
+    }
+    importFile.value='';
+  };
+  reader.readAsText(file);
+});
+
+/* ---- full reset ---- */
+document.getElementById('resetAll').addEventListener('click',()=>{
+  if(!confirm('This permanently deletes every saved case and all detection coverage in this browser. This cannot be undone. Continue?'))return;
+  try{
+    localStorage.removeItem(LIB_KEY);
+    localStorage.removeItem(ACTIVE_KEY);
+    localStorage.removeItem(COV_KEY);
+    localStorage.removeItem(OLD_SINGLE_KEY);
+  }catch(e){}
+  location.reload();
 });
 
 function updateAddCaseBtn(){
