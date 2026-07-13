@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insurance Fraud Framework (IFF)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#070a10;
+  --bg-2:#0c111b;
+  --panel:#111826;
+  --panel-2:#151d2e;
+  --line:#1e2940;
+  --line-hi:#33405e;
+  --txt:#e6ecf7;
+  --txt-2:#8b9bb8;
+  --txt-3:#5a6a85;
+
+  --cyan:#22d3ee;
+  --cyan-dim:#0e7490;
+  --cyan-bg:rgba(34,211,238,.07);
+
+  --amber:#fb923c;
+  --amber-dim:#c2410c;
+  --amber-bg:rgba(251,146,60,.08);
+
+  --glow-c:rgba(34,211,238,.35);
+  --glow-a:rgba(251,146,60,.35);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--txt);
+  font-family:"Space Grotesk",system-ui,-apple-system,sans-serif;
+  line-height:1.5;-webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(900px 500px at 12% -8%, rgba(34,211,238,.10), transparent 60%),
+    radial-gradient(700px 420px at 95% 0%, rgba(251,146,60,.07), transparent 60%),
+    linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+  background-size:auto,auto,42px 42px,42px 42px;
+}
+.wrap{max-width:1340px;margin:0 auto;padding:0 22px}
+.mono{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace}
+
+/* ---------- header ---------- */
+header{border-bottom:1px solid var(--line);padding:34px 0 26px;position:relative}
+header::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;
+  background:linear-gradient(90deg,var(--cyan),transparent 42%,var(--amber) 78%,transparent);opacity:.5}
+.eyebrow{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--cyan);margin:0 0 14px;display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--cyan);
+  box-shadow:0 0 0 3px rgba(34,211,238,.16);animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+h1{font-size:clamp(30px,5.2vw,54px);line-height:1.0;margin:0;font-weight:700;letter-spacing:-.028em}
+h1 .lo{color:var(--txt-3);font-weight:500}
+.sub{margin:16px 0 0;max-width:66ch;color:var(--txt-2);font-size:16px;line-height:1.6}
+.sub b{color:var(--txt);font-weight:500}
+
+.stats{display:flex;flex-wrap:wrap;gap:0;margin-top:24px;border:1px solid var(--line);
+  border-radius:8px;overflow:hidden;background:rgba(17,24,38,.55);backdrop-filter:blur(6px);width:fit-content}
+.stat{padding:11px 20px;border-right:1px solid var(--line)}
+.stat:last-child{border-right:0}
+.stat .k{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--txt-3);display:block}
+.stat .v{font-family:"JetBrains Mono",monospace;font-size:15px;font-weight:600;color:var(--txt);margin-top:2px}
+.stat .v em{font-style:normal;color:var(--amber)}
+.stat .v i{font-style:normal;color:var(--cyan)}
+
+/* ---------- toolbar ---------- */
+.bar{display:flex;flex-wrap:wrap;gap:14px 20px;align-items:center;padding:18px 0}
+.chip{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--txt-2)}
+.sw{width:26px;height:13px;border-radius:3px;border:1px solid;position:relative}
+.sw.c{background:var(--cyan-bg);border-color:var(--cyan-dim)}
+.sw.c::after{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--cyan)}
+.sw.a{background:var(--amber-bg);border-color:var(--amber-dim)}
+.sw.a::after{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--amber)}
+.tools{margin-left:auto;display:flex;gap:9px;flex-wrap:wrap}
+.search{font-family:"JetBrains Mono",monospace;font-size:12px;padding:8px 12px 8px 30px;
+  border:1px solid var(--line);border-radius:6px;background:var(--panel) url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' fill='none' stroke='%235a6a85' stroke-width='2'%3E%3Ccircle cx='5.5' cy='5.5' r='4'/%3E%3Cpath d='M9 9l3.5 3.5'/%3E%3C/svg%3E") no-repeat 10px center;
+  color:var(--txt);width:220px}
+.search::placeholder{color:var(--txt-3)}
+.search:focus{outline:none;border-color:var(--cyan-dim);box-shadow:0 0 0 3px rgba(34,211,238,.10)}
+button.tgl{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.12em;
+  text-transform:uppercase;background:var(--panel);border:1px solid var(--line);color:var(--txt-2);
+  padding:8px 13px;border-radius:6px;cursor:pointer;transition:.15s}
+button.tgl:hover{border-color:var(--line-hi);color:var(--txt)}
+button.tgl[aria-pressed="true"]{background:var(--amber-bg);border-color:var(--amber-dim);
+  color:var(--amber);box-shadow:0 0 14px rgba(251,146,60,.12)}
+button.tgl:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+
+/* ---------- matrix ---------- */
+.matrix{overflow-x:auto;padding-bottom:6px;scrollbar-width:thin}
+.matrix::-webkit-scrollbar{height:9px}
+.matrix::-webkit-scrollbar-track{background:var(--bg-2);border-radius:9px}
+.matrix::-webkit-scrollbar-thumb{background:var(--line-hi);border-radius:9px}
+.grid{display:grid;grid-auto-flow:column;gap:11px;min-width:min-content;padding:4px 0 26px}
+.col{min-width:206px;max-width:218px;display:flex;flex-direction:column;gap:7px}
+
+.tac-card{border:1px solid var(--line);border-radius:8px;background:var(--panel);
+  padding:12px 13px;min-height:92px;position:relative;overflow:hidden}
+.tac-card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--cyan)}
+.tac-card.iff::before{background:var(--amber)}
+.tac-card.iff{background:linear-gradient(180deg,var(--amber-bg),var(--panel) 70%);border-color:#3a2a1e}
+.tid{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.14em;color:var(--txt-3);display:block}
+.tac-card h2{font-size:14.5px;margin:4px 0 0;font-weight:600;line-height:1.2;letter-spacing:-.01em}
+.tag{font-family:"JetBrains Mono",monospace;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;
+  padding:2px 6px;border-radius:4px;margin-left:7px;vertical-align:middle;font-weight:500}
+.tag.c{background:var(--cyan-bg);color:var(--cyan);border:1px solid rgba(34,211,238,.22)}
+.tag.a{background:var(--amber-bg);color:var(--amber);border:1px solid rgba(251,146,60,.28)}
+.cnt{font-family:"JetBrains Mono",monospace;font-size:9.5px;color:var(--txt-3);margin-top:8px}
+
+.tech{border:1px solid var(--line);background:var(--panel-2);border-radius:6px;
+  padding:9px 11px 9px 12px;cursor:pointer;text-align:left;width:100%;font:inherit;color:var(--txt);
+  position:relative;transition:transform .12s cubic-bezier(.4,0,.2,1),border-color .12s,box-shadow .12s}
+.tech::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:2px;border-radius:2px;
+  background:var(--cyan-dim);transition:.12s}
+.tech.iff::before{background:var(--amber-dim)}
+.tech:hover{transform:translateY(-2px);border-color:var(--line-hi);box-shadow:0 6px 20px rgba(0,0,0,.45)}
+.tech:hover::before{background:var(--cyan);box-shadow:0 0 10px var(--glow-c)}
+.tech.iff:hover::before{background:var(--amber);box-shadow:0 0 10px var(--glow-a)}
+.tech:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.tech .id{font-family:"JetBrains Mono",monospace;font-size:9.5px;color:var(--txt-3);display:block;letter-spacing:.06em}
+.tech.iff .id{color:#a15f3a}
+.tech .nm{font-size:13.5px;line-height:1.28;margin-top:3px;font-weight:500;letter-spacing:-.005em}
+.tech.dim{opacity:.16;pointer-events:none;filter:grayscale(.6)}
+.tech.hit{border-color:var(--cyan);box-shadow:0 0 0 1px var(--cyan),0 0 22px rgba(34,211,238,.18)}
+
+/* ---------- note ---------- */
+.note{max-width:78ch;margin:8px 0 44px;font-size:14.5px;color:var(--txt-2);line-height:1.65;
+  border-left:2px solid var(--line);padding-left:18px}
+.note strong{color:var(--txt);font-weight:600}
+.note code{font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--amber);
+  background:var(--amber-bg);padding:1px 5px;border-radius:4px}
+
+/* ---------- drawer ---------- */
+.scrim{position:fixed;inset:0;background:rgba(3,5,9,.72);backdrop-filter:blur(3px);opacity:0;
+  pointer-events:none;transition:opacity .22s ease;z-index:20}
+.scrim.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(470px,93vw);background:var(--bg-2);
+  border-left:1px solid var(--line);transform:translateX(102%);
+  transition:transform .3s cubic-bezier(.32,.72,0,1);z-index:21;display:flex;flex-direction:column;
+  padding:26px 30px 36px;overflow-y:auto}
+.drawer::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--cyan);opacity:.7}
+.drawer.iff::before{background:var(--amber)}
+.drawer.open{transform:none}
+.dtop{display:flex;justify-content:space-between;align-items:flex-start}
+.close{background:var(--panel);border:1px solid var(--line);font-size:16px;cursor:pointer;
+  color:var(--txt-2);line-height:1;padding:6px 10px;border-radius:6px;transition:.15s}
+.close:hover{color:var(--txt);border-color:var(--line-hi)}
+.d-id{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.14em;color:var(--cyan)}
+.drawer.iff .d-id{color:var(--amber)}
+.drawer h3{font-size:26px;margin:8px 0 12px;font-weight:700;line-height:1.12;letter-spacing:-.022em}
+.d-src{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.12em;
+  text-transform:uppercase;padding:4px 9px;border-radius:5px;margin-bottom:18px;font-weight:500}
+.d-src.c{background:var(--cyan-bg);color:var(--cyan);border:1px solid rgba(34,211,238,.22)}
+.d-src.a{background:var(--amber-bg);color:var(--amber);border:1px solid rgba(251,146,60,.28)}
+.d-tac{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--txt-3);margin:0 0 20px;
+  padding-bottom:18px;border-bottom:1px solid var(--line);letter-spacing:.05em}
+.d-tac b{color:var(--txt-2);font-weight:500}
+.desc{font-size:15.5px;line-height:1.62;margin:0 0 18px;color:var(--txt)}
+.d-note{font-size:13.5px;background:var(--panel);border:1px solid var(--line);border-left:2px solid var(--amber);
+  padding:12px 14px;border-radius:0 6px 6px 0;color:var(--txt-2);line-height:1.55}
+.d-note b{color:var(--amber);font-weight:600;font-family:"JetBrains Mono",monospace;font-size:10px;
+  letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:5px}
+
+footer{border-top:1px solid var(--line);padding:22px 0 44px;
+  font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--txt-3);letter-spacing:.05em}
+footer a{color:var(--cyan);text-decoration:none;border-bottom:1px solid rgba(34,211,238,.3)}
+footer a:hover{border-color:var(--cyan)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media(max-width:640px){.tools{margin-left:0;width:100%}.search{flex:1;width:auto}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <p class="eyebrow">Draft taxonomy &mdash; conceptual extension of MITRE F3</p>
+  <h1>Insurance Fraud <span class="lo">Framework</span></h1>
+  <p class="sub">An ATT&amp;CK-style model of how insurance fraud actually unfolds &mdash; extending MITRE&rsquo;s Fight Fraud Framework with the <b>staged, induced and paper-based</b> techniques that never touch a server log.</p>
+  <div class="stats">
+    <div class="stat"><span class="k">Version</span><span class="v">v0.1 <em>draft</em></span></div>
+    <div class="stat"><span class="k">Built on</span><span class="v">MITRE F3 <i>v1.1</i></span></div>
+    <div class="stat"><span class="k">Tactics</span><span class="v">8 <em>(2 new)</em></span></div>
+    <div class="stat"><span class="k">Techniques</span><span class="v">38 <em>(30 new)</em></span></div>
+  </div>
+</div></header>
+
+<div class="wrap">
+  <div class="bar">
+    <span class="chip"><span class="sw c"></span> Inherited from F3 / ATT&amp;CK</span>
+    <span class="chip"><span class="sw a"></span> Insurance-specific &mdash; new</span>
+    <span class="tools">
+      <input id="search" class="search" type="search" placeholder="search techniques..." aria-label="Search techniques">
+      <button class="tgl" id="onlyIff" aria-pressed="false">Only new</button>
+    </span>
+  </div>
+  <div class="matrix"><div class="grid" id="grid"></div></div>
+  <p class="note"><strong>How to read this.</strong> Each column is a <em>tactic</em> &mdash; the actor&rsquo;s goal at that stage of the fraud lifecycle. F3 models <strong>cyber-enabled</strong> fraud and stops at the edge of the digital channel. Insurance fraud frequently has no digital channel at all: a staged collision, an inflated garage estimate, a ghost-broked policy. Two tactics here have <strong>no F3 equivalent</strong> &mdash; <code>IFA001 Policy Onboarding</code> (fraud baked in at underwriting) and <code>IFA002 Loss Engineering</code> (manufacturing the insured event itself). Techniques carrying <code>F####</code> or <code>T####</code> IDs are reused directly from F3 / ATT&amp;CK where the behaviour is identical; <code>IF####</code> IDs are new. Illustrative and non-exhaustive &mdash; a strawman to start the conversation, not an official matrix.</p>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="d-title">
+  <div class="dtop">
+    <span class="d-id" id="d-id"></span>
+    <button class="close" id="dClose" aria-label="Close">&times;</button>
+  </div>
+  <h3 id="d-title"></h3>
+  <span class="d-src" id="d-src"></span>
+  <p class="d-tac" id="d-tac"></p>
+  <p class="desc" id="d-desc"></p>
+  <div class="d-note" id="d-note" hidden></div>
+</aside>
+
+<footer><div class="wrap">
+  Conceptual draft &middot; structure &amp; inherited techniques &copy; MITRE F3 (Apache-2.0) &middot; official framework at <a href="https://ctid.mitre.org/fraud">ctid.mitre.org/fraud</a>
+</div></footer>
+
+<script>
+const DATA = {"meta": {"name": "Insurance Fraud Framework (IFF)", "shortName": "IFF", "version": "0.1 (draft)", "basedOn": "MITRE Fight Fraud Framework (F3) v1.1", "note": "A conceptual, ATT&CK-style taxonomy for insurance fraud that extends F3's cyber-fraud lifecycle with the non-digital techniques that dominate real-world insurance fraud. Illustrative and non-exhaustive. IF#### IDs denote insurance-specific techniques; F#### and T#### IDs are reused directly from F3 / MITRE ATT&CK where the behaviour is identical."}, "tactics": [{"id": "TA0043", "name": "Reconnaissance", "source": "f3", "desc": "Gathering information to plan a fraudulent claim or scheme — target policies, coverage limits, claims-handling processes, and the identities or assets to be exploited."}, {"id": "TA0042", "name": "Resource Development", "source": "f3", "desc": "Establishing the identities, documents, staged conditions, and complicit parties needed to execute the fraud."}, {"id": "IFA001", "name": "Policy Onboarding", "source": "iff", "desc": "Obtaining or manipulating a policy so that a future claim can be made — the insurance analogue of Initial Access. Fraud may be baked in at application (application fraud) or the policy may be legitimate and later abused."}, {"id": "IFA002", "name": "Loss Engineering", "source": "iff", "desc": "Creating, staging, inducing, or fabricating the insured event itself. This is the tactic with no equivalent in F3: the fraud actor manufactures the loss rather than compromising a system."}, {"id": "TA0005", "name": "Stealth", "source": "f3", "desc": "Actions to make the claim appear legitimate and avoid triggering fraud indicators, SIU referral, or watchlist matches."}, {"id": "IFA003", "name": "Claim Submission", "source": "iff", "desc": "Lodging the claim and supporting evidence with the insurer — the execution stage where the fraudulent demand is formally made."}, {"id": "IFA004", "name": "Claim Maximisation", "source": "iff", "desc": "Inflating, padding, or extending a claim — whether the underlying loss is genuine or fabricated — to increase the payout."}, {"id": "FA0002", "name": "Monetization", "source": "f3", "desc": "Converting the settlement into usable value and, where organised, laundering or distributing proceeds among participants."}], "techniques": [{"id": "IF1001", "name": "Coverage & Limit Probing", "tactic": "TA0043", "source": "iff", "desc": "Querying policy terms, excesses, and payout limits (via the policyholder, an agent, or public product data) to design a claim that sits below scrutiny thresholds or maximises recovery."}, {"id": "IF1002", "name": "Claims Process Mapping", "tactic": "TA0043", "source": "iff", "desc": "Learning an insurer's triage, evidence, and settlement workflow — including which loss values or claim types are fast-tracked without investigation.", "note": "Insurance analogue of F3's Interactive Voice Response Mapping (F1034)."}, {"id": "IF1003", "name": "Target Selection", "tactic": "TA0043", "source": "iff", "desc": "Identifying vulnerable claimants, high-value assets, or lightly-underwritten products; in staged-accident rings, selecting innocent third parties (e.g. by vehicle type) to serve as at-fault victims."}, {"id": "F1029", "name": "Gather Customer Information", "tactic": "TA0043", "source": "f3", "desc": "Collecting personal data on a genuine policyholder to enable impersonation or an identity-based claim."}, {"id": "IF1010", "name": "Synthetic / Stolen Identity Setup", "tactic": "TA0042", "source": "iff", "desc": "Building or acquiring identities to take out policies or file claims that cannot be traced to the real actor. Overlaps with cyber synthetic-identity fraud but frequently paper-based in insurance."}, {"id": "IF1011", "name": "Ghost Broking", "tactic": "TA0042", "source": "iff", "desc": "A fake or complicit intermediary sells policies that are forged, altered after purchase, or taken out with falsified details — the victim believes they are insured while the broker pockets the premium or enables downstream claims."}, {"id": "IF1012", "name": "Recruit Complicit Professionals", "tactic": "TA0042", "source": "iff", "desc": "Enlisting doctors, garages, loss adjusters, lawyers, or repairers to provide false reports, inflated estimates, or fabricated treatment records."}, {"id": "IF1013", "name": "Recruit Participants", "tactic": "TA0042", "source": "iff", "desc": "Enlisting willing claimants, 'crash-for-cash' drivers, phantom passengers, or false witnesses; may involve coercion or paid stand-ins."}, {"id": "IF1014", "name": "Stage Physical Assets", "tactic": "TA0042", "source": "iff", "desc": "Acquiring or preparing vehicles, property, or goods to be damaged, destroyed, or falsely reported as lost."}, {"id": "F1020", "name": "Create Fake Materials", "tactic": "TA0042", "source": "f3", "desc": "Producing forged documents (receipts, valuations, ID, medical notes) or fake websites to support the scheme."}, {"id": "F1027", "name": "Falsify Business Documents", "tactic": "TA0042", "source": "f3", "desc": "Creating or altering invoices, repair estimates, or company records that underpin a fraudulent claim."}, {"id": "IF1020", "name": "Application Fraud (Fronting/Misrepresentation)", "tactic": "IFA001", "source": "iff", "desc": "Providing false information at underwriting — concealing risk, misstating the named driver ('fronting'), understating value, or omitting prior claims — to obtain cover or a lower premium."}, {"id": "IF1021", "name": "Backdated / Post-Loss Cover", "tactic": "IFA001", "source": "iff", "desc": "Taking out or amending a policy after a loss has already occurred and presenting it as pre-existing cover."}, {"id": "IF1022", "name": "Policy Takeover / Amendment Abuse", "tactic": "IFA001", "source": "iff", "desc": "Gaining control of a legitimate policy or altering its details (beneficiary, payout account, insured items) to redirect or enable a claim.", "note": "Insurance analogue of F3's Account Manipulation (F1005)."}, {"id": "F1031", "name": "Impersonate Account Holder", "tactic": "IFA001", "source": "f3", "desc": "Posing as a genuine policyholder to bind cover or take over an existing policy."}, {"id": "IF1030", "name": "Staged Accident", "tactic": "IFA002", "source": "iff", "desc": "Deliberately causing a collision or incident between colluding parties to generate injury and damage claims ('crash for cash', staged slip-and-fall)."}, {"id": "IF1031", "name": "Induced Accident", "tactic": "IFA002", "source": "iff", "desc": "Provoking a genuine but innocent third party into an at-fault collision (e.g. sudden braking) so the victim's insurer pays a fabricated or inflated claim."}, {"id": "IF1032", "name": "Fabricated / Phantom Loss", "tactic": "IFA002", "source": "iff", "desc": "Reporting an event that never happened — a burglary, an injury, a death, or damage to goods that were never lost."}, {"id": "IF1033", "name": "Intentional Destruction", "tactic": "IFA002", "source": "iff", "desc": "Deliberately damaging or destroying an insured asset — arson, deliberate write-off, staged theft-and-dump — to claim its value."}, {"id": "IF1034", "name": "Exaggerated Genuine Loss", "tactic": "IFA002", "source": "iff", "desc": "Starting from a real, minor incident and escalating its scope or severity to justify a larger claim."}, {"id": "IF1035", "name": "Existing-Condition Repackaging", "tactic": "IFA002", "source": "iff", "desc": "Presenting a pre-existing injury, illness, or pre-existing damage as newly caused by the insured event (common in health, PI, and property lines)."}, {"id": "IF1040", "name": "Loss Timeline Manipulation", "tactic": "TA0005", "source": "iff", "desc": "Adjusting reported dates/times so the loss falls within the policy period or after a waiting period lapses."}, {"id": "IF1041", "name": "Claim Splitting / Structuring", "tactic": "TA0005", "source": "iff", "desc": "Breaking one loss into multiple smaller claims — across policies, insurers, or time — to stay under investigation thresholds.", "note": "Insurance analogue of F3's Structuring (F1045)."}, {"id": "IF1042", "name": "SIU / Watchlist Evasion", "tactic": "TA0005", "source": "iff", "desc": "Using clean identities, varied addresses, or new intermediaries to avoid matching known-fraud databases (e.g. shared industry registers)."}, {"id": "IF1043", "name": "Evidence Curation", "tactic": "TA0005", "source": "iff", "desc": "Supplying selectively genuine-looking documentation and suppressing contradictory evidence to pre-empt adjuster questions."}, {"id": "F1032", "name": "Impersonate Official", "tactic": "TA0005", "source": "f3", "desc": "Posing as a legitimate professional (adjuster, medic, official) to lend the claim false credibility."}, {"id": "IF1050", "name": "First-Party Claim Filing", "tactic": "IFA003", "source": "iff", "desc": "The policyholder (or someone posing as them) submits the fraudulent claim under their own cover."}, {"id": "IF1051", "name": "Third-Party Claim Filing", "tactic": "IFA003", "source": "iff", "desc": "A claim is made against another party's policy — the mechanism behind most induced/staged motor fraud."}, {"id": "IF1052", "name": "Multi-Insurer Duplicate Filing", "tactic": "IFA003", "source": "iff", "desc": "Submitting the same loss to more than one insurer to collect multiple settlements."}, {"id": "IF1053", "name": "Fraudulent Supporting Evidence", "tactic": "IFA003", "source": "iff", "desc": "Attaching forged receipts, doctored photos, false medical or repair reports, or fabricated witness statements to the claim."}, {"id": "IF1060", "name": "Claim Padding", "tactic": "IFA004", "source": "iff", "desc": "Adding items, damage, or costs that were not part of the actual loss."}, {"id": "IF1061", "name": "Inflated Valuation", "tactic": "IFA004", "source": "iff", "desc": "Overstating the value of lost or damaged property, or the cost of repair/replacement, often via complicit valuers or garages."}, {"id": "IF1062", "name": "Treatment / Care Inflation", "tactic": "IFA004", "source": "iff", "desc": "Billing for unnecessary, exaggerated, or non-existent medical treatment, rehabilitation, or care (health, PI, workers' comp)."}, {"id": "IF1063", "name": "Prolonged Loss of Use", "tactic": "IFA004", "source": "iff", "desc": "Extending hire-vehicle, business-interruption, or loss-of-earnings periods beyond the genuine impact."}, {"id": "IF1070", "name": "Settlement Collection", "tactic": "FA0002", "source": "iff", "desc": "Receiving the payout — direct to the actor, to a controlled account, or to a complicit third party (garage, clinic, credit-hire firm)."}, {"id": "IF1071", "name": "Proceeds Distribution", "tactic": "FA0002", "source": "iff", "desc": "Splitting the settlement among ring members, recruited participants, and complicit professionals."}, {"id": "F1047", "name": "Transfer of Funds", "tactic": "FA0002", "source": "f3", "desc": "Moving settlement funds through transfers to obscure origin and control."}, {"id": "F1018", "name": "Convert to Cryptocurrency", "tactic": "FA0002", "source": "f3", "desc": "Laundering proceeds via crypto conversion, more common in organised/cyber-enabled rings."}]};
+const grid = document.getElementById('grid');
+
+DATA.tactics.forEach(t=>{
+  const col=document.createElement('div');col.className='col';
+  const techs=DATA.techniques.filter(x=>x.tactic===t.id);
+  const isIff=t.source==='iff';
+  const head=document.createElement('div');
+  head.innerHTML=`<div class="tac-card ${isIff?'iff':''}">
+    <span class="tid">${t.id}</span>
+    <h2>${t.name}<span class="tag ${isIff?'a':'c'}">${isIff?'new':'F3'}</span></h2>
+    <div class="cnt">${techs.length} techniques</div></div>`;
+  col.appendChild(head.firstElementChild);
+  techs.forEach(x=>{
+    const b=document.createElement('button');
+    b.className='tech '+(x.source==='iff'?'iff':'');
+    b.dataset.src=x.source;
+    b.dataset.search=(x.id+' '+x.name+' '+x.desc).toLowerCase();
+    b.innerHTML=`<span class="id">${x.id}</span><span class="nm">${x.name}</span>`;
+    b.addEventListener('click',()=>openDrawer(x,t));
+    col.appendChild(b);
+  });
+  grid.appendChild(col);
+});
+
+const drawer=document.getElementById('drawer'),scrim=document.getElementById('scrim');
+function openDrawer(x,t){
+  const iff=x.source==='iff';
+  drawer.classList.toggle('iff',iff);
+  document.getElementById('d-id').textContent=x.id;
+  document.getElementById('d-title').textContent=x.name;
+  const src=document.getElementById('d-src');
+  src.textContent=iff?'Insurance-specific':'Inherited from F3 / ATT&CK';
+  src.className='d-src '+(iff?'a':'c');
+  document.getElementById('d-tac').innerHTML=`TACTIC &nbsp;<b>${t.name}</b>&nbsp; &middot; &nbsp;${t.id}`;
+  document.getElementById('d-desc').textContent=x.desc;
+  const n=document.getElementById('d-note');
+  if(x.note){n.innerHTML='<b>Mapping note</b>'+x.note;n.hidden=false;}else{n.hidden=true;}
+  drawer.classList.add('open');scrim.classList.add('open');
+  document.getElementById('dClose').focus();
+}
+function closeDrawer(){drawer.classList.remove('open');scrim.classList.remove('open');}
+document.getElementById('dClose').addEventListener('click',closeDrawer);
+scrim.addEventListener('click',closeDrawer);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer();});
+
+const onlyIff=document.getElementById('onlyIff'),search=document.getElementById('search');
+function applyFilters(){
+  const q=search.value.trim().toLowerCase();
+  const iffOnly=onlyIff.getAttribute('aria-pressed')==='true';
+  document.querySelectorAll('.tech').forEach(el=>{
+    let show=!(iffOnly&&el.dataset.src!=='iff');
+    if(q&&show&&!el.dataset.search.includes(q))show=false;
+    el.classList.toggle('dim',!show);
+    el.classList.toggle('hit',!!q&&show);
+  });
+}
+onlyIff.addEventListener('click',()=>{
+  onlyIff.setAttribute('aria-pressed',onlyIff.getAttribute('aria-pressed')==='true'?'false':'true');
+  applyFilters();
+});
+search.addEventListener('input',applyFilters);
+</script>
+</body>
+</html>
