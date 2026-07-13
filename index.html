@@ -27,6 +27,18 @@
   --amber-dim:#c2410c;
   --amber-bg:rgba(251,146,60,.08);
 
+  --violet:#a78bfa;
+  --violet-dim:#7c3aed;
+  --violet-bg:rgba(167,139,250,.09);
+
+  --gap:#f16565;
+  --gap-bg:rgba(241,101,101,.12);
+  --partial:#f0cf5c;
+  --partial-bg:rgba(240,207,92,.12);
+  --strong:#7ed17f;
+  --strong-bg:rgba(126,209,127,.12);
+  --none:#3a4560;
+
   --glow-c:rgba(34,211,238,.35);
   --glow-a:rgba(251,146,60,.35);
 }
@@ -46,7 +58,6 @@ body{
 .wrap{max-width:1340px;margin:0 auto;padding:0 22px}
 .mono{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace}
 
-/* ---------- header ---------- */
 header{border-bottom:1px solid var(--line);padding:34px 0 26px;position:relative}
 header::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;
   background:linear-gradient(90deg,var(--cyan),transparent 42%,var(--amber) 78%,transparent);opacity:.5}
@@ -70,27 +81,47 @@ h1 .lo{color:var(--txt-3);font-weight:500}
 .stat .v em{font-style:normal;color:var(--amber)}
 .stat .v i{font-style:normal;color:var(--cyan)}
 
-/* ---------- toolbar ---------- */
-.bar{display:flex;flex-wrap:wrap;gap:14px 20px;align-items:center;padding:18px 0}
-.chip{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--txt-2)}
-.sw{width:26px;height:13px;border-radius:3px;border:1px solid;position:relative}
+/* ---------- sticky toolbars ---------- */
+.casebar{position:sticky;top:0;z-index:15;display:flex;align-items:center;gap:14px;
+  background:rgba(7,10,16,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+  padding:11px 0}
+.casebar .wrap{display:flex;align-items:center;gap:10px;width:100%;flex-wrap:wrap}
+.case-btn{font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.06em;
+  background:var(--panel);border:1px solid var(--line-hi);color:var(--txt);padding:9px 14px;
+  border-radius:7px;cursor:pointer;display:flex;align-items:center;gap:9px;transition:.15s;white-space:nowrap}
+.case-btn:hover{border-color:var(--violet);box-shadow:0 0 14px rgba(167,139,250,.14)}
+.case-btn.heat:hover{border-color:var(--strong);box-shadow:0 0 14px rgba(126,209,127,.14)}
+.case-btn .n{background:var(--violet);color:#1a0f2e;font-weight:700;border-radius:4px;padding:1px 7px;font-size:10.5px}
+.case-hint{font-size:12px;color:var(--txt-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.casebar .tools{margin-left:auto;display:flex;gap:9px;flex-wrap:wrap}
+
+.search{font-family:"JetBrains Mono",monospace;font-size:12px;padding:8px 12px 8px 30px;
+  border:1px solid var(--line);border-radius:6px;background:var(--panel) url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' fill='none' stroke='%235a6a85' stroke-width='2'%3E%3Ccircle cx='5.5' cy='5.5' r='4'/%3E%3Cpath d='M9 9l3.5 3.5'/%3E%3C/svg%3E") no-repeat 10px center;
+  color:var(--txt);width:200px}
+.search::placeholder{color:var(--txt-3)}
+.search:focus{outline:none;border-color:var(--cyan-dim);box-shadow:0 0 0 3px rgba(34,211,238,.10)}
+button.tgl{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;background:var(--panel);border:1px solid var(--line);color:var(--txt-2);
+  padding:8px 13px;border-radius:6px;cursor:pointer;transition:.15s;white-space:nowrap}
+button.tgl:hover{border-color:var(--line-hi);color:var(--txt)}
+button.tgl[aria-pressed="true"]{background:var(--amber-bg);border-color:var(--amber-dim);
+  color:var(--amber);box-shadow:0 0 14px rgba(251,146,60,.12)}
+button.tgl.heat[aria-pressed="true"]{background:var(--strong-bg);border-color:var(--strong);color:var(--strong);
+  box-shadow:0 0 14px rgba(126,209,127,.14)}
+button.tgl:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+
+.legend{display:flex;flex-wrap:wrap;gap:16px;align-items:center;padding:16px 0 8px;font-size:12.5px;color:var(--txt-2)}
+.chip{display:inline-flex;align-items:center;gap:8px}
+.sw{width:24px;height:13px;border-radius:3px;border:1px solid;position:relative}
 .sw.c{background:var(--cyan-bg);border-color:var(--cyan-dim)}
 .sw.c::after{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--cyan)}
 .sw.a{background:var(--amber-bg);border-color:var(--amber-dim)}
 .sw.a::after{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--amber)}
-.tools{margin-left:auto;display:flex;gap:9px;flex-wrap:wrap}
-.search{font-family:"JetBrains Mono",monospace;font-size:12px;padding:8px 12px 8px 30px;
-  border:1px solid var(--line);border-radius:6px;background:var(--panel) url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' fill='none' stroke='%235a6a85' stroke-width='2'%3E%3Ccircle cx='5.5' cy='5.5' r='4'/%3E%3Cpath d='M9 9l3.5 3.5'/%3E%3C/svg%3E") no-repeat 10px center;
-  color:var(--txt);width:220px}
-.search::placeholder{color:var(--txt-3)}
-.search:focus{outline:none;border-color:var(--cyan-dim);box-shadow:0 0 0 3px rgba(34,211,238,.10)}
-button.tgl{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.12em;
-  text-transform:uppercase;background:var(--panel);border:1px solid var(--line);color:var(--txt-2);
-  padding:8px 13px;border-radius:6px;cursor:pointer;transition:.15s}
-button.tgl:hover{border-color:var(--line-hi);color:var(--txt)}
-button.tgl[aria-pressed="true"]{background:var(--amber-bg);border-color:var(--amber-dim);
-  color:var(--amber);box-shadow:0 0 14px rgba(251,146,60,.12)}
-button.tgl:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.sw.dot{width:12px;height:12px;border-radius:50%;border:none}
+.sw.dot.gap{background:var(--gap)}
+.sw.dot.partial{background:var(--partial)}
+.sw.dot.strong{background:var(--strong)}
+.sw.dot.none{background:var(--none)}
 
 /* ---------- matrix ---------- */
 .matrix{overflow-x:auto;padding-bottom:6px;scrollbar-width:thin}
@@ -114,8 +145,8 @@ button.tgl:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
 .cnt{font-family:"JetBrains Mono",monospace;font-size:9.5px;color:var(--txt-3);margin-top:8px}
 
 .tech{border:1px solid var(--line);background:var(--panel-2);border-radius:6px;
-  padding:9px 11px 9px 12px;cursor:pointer;text-align:left;width:100%;font:inherit;color:var(--txt);
-  position:relative;transition:transform .12s cubic-bezier(.4,0,.2,1),border-color .12s,box-shadow .12s}
+  padding:9px 34px 9px 12px;cursor:pointer;text-align:left;width:100%;font:inherit;color:var(--txt);
+  position:relative;transition:transform .12s cubic-bezier(.4,0,.2,1),border-color .12s,box-shadow .12s,background .15s}
 .tech::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:2px;border-radius:2px;
   background:var(--cyan-dim);transition:.12s}
 .tech.iff::before{background:var(--amber-dim)}
@@ -124,19 +155,43 @@ button.tgl:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
 .tech.iff:hover::before{background:var(--amber);box-shadow:0 0 10px var(--glow-a)}
 .tech:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
 .tech .id{font-family:"JetBrains Mono",monospace;font-size:9.5px;color:var(--txt-3);display:block;letter-spacing:.06em}
-.tech.iff .id{color:#a15f3a}
+.tech.iff .id{color:#c98a5f}
 .tech .nm{font-size:13.5px;line-height:1.28;margin-top:3px;font-weight:500;letter-spacing:-.005em}
 .tech.dim{opacity:.16;pointer-events:none;filter:grayscale(.6)}
 .tech.hit{border-color:var(--cyan);box-shadow:0 0 0 1px var(--cyan),0 0 22px rgba(34,211,238,.18)}
 
-/* ---------- note ---------- */
+.tech .pick{position:absolute;top:8px;right:8px;width:18px;height:18px;border-radius:4px;
+  border:1px solid var(--line-hi);background:var(--bg-2);display:flex;align-items:center;justify-content:center;
+  transition:.12s;z-index:2}
+.tech .pick svg{width:11px;height:11px;opacity:0;transition:.12s;stroke:var(--bg)}
+.tech.sel{border-color:var(--violet-dim);box-shadow:0 0 0 1px var(--violet),0 0 18px rgba(167,139,250,.16)}
+.tech.sel .pick{background:var(--violet);border-color:var(--violet)}
+.tech.sel .pick svg{opacity:1}
+
+.tech .covdot{position:absolute;bottom:8px;right:8px;width:9px;height:9px;border-radius:50%;
+  background:var(--none);transition:.15s;z-index:2}
+.tech .covdot.gap{background:var(--gap);box-shadow:0 0 6px rgba(241,101,101,.6)}
+.tech .covdot.partial{background:var(--partial);box-shadow:0 0 6px rgba(240,207,92,.6)}
+.tech .covdot.strong{background:var(--strong);box-shadow:0 0 6px rgba(126,209,127,.6)}
+
+/* heat-map view mode: recolor card body by coverage, mute source coloring */
+body.heatmap .tech{background:var(--panel-2)}
+body.heatmap .tech::before{background:var(--none) !important;box-shadow:none !important;opacity:.4}
+body.heatmap .tech[data-cov="gap"]{background:var(--gap-bg);border-color:rgba(241,101,101,.35)}
+body.heatmap .tech[data-cov="gap"]::before{background:var(--gap) !important;opacity:1}
+body.heatmap .tech[data-cov="partial"]{background:var(--partial-bg);border-color:rgba(240,207,92,.35)}
+body.heatmap .tech[data-cov="partial"]::before{background:var(--partial) !important;opacity:1}
+body.heatmap .tech[data-cov="strong"]{background:var(--strong-bg);border-color:rgba(126,209,127,.35)}
+body.heatmap .tech[data-cov="strong"]::before{background:var(--strong) !important;opacity:1}
+body.heatmap .tech .id, body.heatmap .tech.iff .id{color:var(--txt-2)}
+
 .note{max-width:78ch;margin:8px 0 44px;font-size:14.5px;color:var(--txt-2);line-height:1.65;
   border-left:2px solid var(--line);padding-left:18px}
 .note strong{color:var(--txt);font-weight:600}
 .note code{font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--amber);
   background:var(--amber-bg);padding:1px 5px;border-radius:4px}
 
-/* ---------- drawer ---------- */
+/* ---------- right drawer: technique detail ---------- */
 .scrim{position:fixed;inset:0;background:rgba(3,5,9,.72);backdrop-filter:blur(3px);opacity:0;
   pointer-events:none;transition:opacity .22s ease;z-index:20}
 .scrim.open{opacity:1;pointer-events:auto}
@@ -163,16 +218,105 @@ button.tgl:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
 .d-tac b{color:var(--txt-2);font-weight:500}
 .desc{font-size:15.5px;line-height:1.62;margin:0 0 18px;color:var(--txt)}
 .d-note{font-size:13.5px;background:var(--panel);border:1px solid var(--line);border-left:2px solid var(--amber);
-  padding:12px 14px;border-radius:0 6px 6px 0;color:var(--txt-2);line-height:1.55}
+  padding:12px 14px;border-radius:0 6px 6px 0;color:var(--txt-2);line-height:1.55;margin-bottom:20px}
 .d-note b{color:var(--amber);font-weight:600;font-family:"JetBrains Mono",monospace;font-size:10px;
   letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:5px}
+
+.dsection{border-top:1px solid var(--line);padding-top:18px;margin-top:4px}
+.dsection label{display:block;font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--txt-3);margin-bottom:10px}
+.covrow{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px}
+.covbtn{flex:1;min-width:80px;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.05em;
+  text-transform:uppercase;background:var(--panel);border:1px solid var(--line);color:var(--txt-2);
+  padding:9px 6px;border-radius:6px;cursor:pointer;transition:.15s;text-align:center}
+.covbtn:hover{border-color:var(--line-hi);color:var(--txt)}
+.covbtn[data-active="true"]{color:#0a0f0a;font-weight:600}
+.covbtn[data-cov="none"][data-active="true"]{background:var(--none);color:var(--txt)}
+.covbtn[data-cov="gap"][data-active="true"]{background:var(--gap)}
+.covbtn[data-cov="partial"][data-active="true"]{background:var(--partial)}
+.covbtn[data-cov="strong"][data-active="true"]{background:var(--strong)}
+.xbtn{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.08em;
+  text-transform:uppercase;background:var(--violet);color:#1a0f2e;border:none;padding:10px 8px;border-radius:6px;
+  cursor:pointer;font-weight:600;transition:.15s;text-align:center}
+.xbtn:hover{background:#c4b5fd;box-shadow:0 0 16px rgba(167,139,250,.3)}
+.xbtn.ghost{background:var(--panel);color:var(--txt-2);border:1px solid var(--line)}
+.xbtn.ghost:hover{border-color:var(--line-hi);color:var(--txt);background:var(--panel)}
+.xbtn.full{width:100%}
+
+/* ---------- left panel: case builder ---------- */
+.cpanel{position:fixed;top:0;left:0;height:100%;width:min(480px,93vw);background:var(--bg-2);
+  border-right:1px solid var(--line);transform:translateX(-102%);
+  transition:transform .3s cubic-bezier(.32,.72,0,1);z-index:21;display:flex;flex-direction:column;
+  padding:24px 26px 30px;overflow-y:auto}
+.cpanel::before{content:"";position:absolute;right:0;top:0;bottom:0;width:2px;background:var(--violet);opacity:.7}
+.cpanel.open{transform:none}
+.cpanel .dtop{margin-bottom:4px}
+.cpanel h3{font-size:20px;margin:0;font-weight:700;letter-spacing:-.02em}
+
+.caseswitch{display:flex;gap:8px;margin:16px 0 6px;align-items:center}
+.caseswitch select{flex:1;background:var(--panel);border:1px solid var(--line);color:var(--txt);
+  font-family:"JetBrains Mono",monospace;font-size:11.5px;padding:8px 10px;border-radius:6px}
+.caseswitch select:focus{outline:none;border-color:var(--violet)}
+.iconbtn{background:var(--panel);border:1px solid var(--line);color:var(--txt-2);width:32px;height:32px;
+  border-radius:6px;cursor:pointer;font-size:14px;line-height:1;flex:none;transition:.15s}
+.iconbtn:hover{border-color:var(--line-hi);color:var(--txt)}
+.iconbtn.danger:hover{border-color:var(--gap);color:var(--gap)}
+.caselist-meta{font-size:11px;color:var(--txt-3);margin-bottom:16px;font-family:"JetBrains Mono",monospace}
+
+.field{margin-bottom:14px}
+.field label{display:block;font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--txt-3);margin-bottom:6px}
+.field input,.field textarea{width:100%;background:var(--panel);border:1px solid var(--line);
+  border-radius:6px;color:var(--txt);font-family:"Space Grotesk",sans-serif;font-size:13.5px;
+  padding:9px 11px;resize:vertical}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--violet);box-shadow:0 0 0 3px rgba(167,139,250,.12)}
+.clist{margin-top:6px;display:flex;flex-direction:column;gap:8px}
+.citem{border:1px solid var(--line);background:var(--panel);border-radius:7px;padding:10px 12px}
+.citem .row{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.citem .id{font-family:"JetBrains Mono",monospace;font-size:9.5px;color:var(--txt-3)}
+.citem .nm{font-size:13.5px;font-weight:500;margin-top:1px}
+.citem .rm{background:none;border:none;color:var(--txt-3);font-size:15px;cursor:pointer;line-height:1;padding:2px 4px}
+.citem .rm:hover{color:#f87171}
+.citem textarea{margin-top:8px;min-height:44px;font-size:12.5px;padding:7px 9px}
+.empty{color:var(--txt-3);font-size:13px;padding:18px 0;text-align:center;border:1px dashed var(--line);border-radius:8px}
+.exportrow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:20px;padding-top:18px;border-top:1px solid var(--line)}
+.exportrow .xbtn{width:100%}
+.exportnote{font-size:11px;color:var(--txt-3);margin-top:10px;line-height:1.5}
+
+/* ---------- coverage panel ---------- */
+.covpanel{position:fixed;top:0;left:0;height:100%;width:min(420px,93vw);background:var(--bg-2);
+  border-right:1px solid var(--line);transform:translateX(-102%);
+  transition:transform .3s cubic-bezier(.32,.72,0,1);z-index:21;display:flex;flex-direction:column;
+  padding:24px 26px 30px;overflow-y:auto}
+.covpanel::before{content:"";position:absolute;right:0;top:0;bottom:0;width:2px;background:var(--strong);opacity:.7}
+.covpanel.open{transform:none}
+.covpanel h3{font-size:20px;margin:0;font-weight:700;letter-spacing:-.02em}
+.covsummary{display:flex;gap:8px;margin:18px 0}
+.covsum-item{flex:1;border:1px solid var(--line);border-radius:7px;padding:10px;text-align:center;background:var(--panel)}
+.covsum-item .num{font-family:"JetBrains Mono",monospace;font-size:20px;font-weight:700}
+.covsum-item .lbl{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--txt-3);margin-top:2px}
+.covsum-item.gap .num{color:var(--gap)}
+.covsum-item.partial .num{color:var(--partial)}
+.covsum-item.strong .num{color:var(--strong)}
+
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--panel);border:1px solid var(--violet);color:var(--txt);font-family:"JetBrains Mono",monospace;
+  font-size:12px;padding:11px 18px;border-radius:8px;z-index:30;opacity:0;pointer-events:none;
+  transition:.22s cubic-bezier(.4,0,.2,1);box-shadow:0 8px 30px rgba(0,0,0,.5);max-width:88vw;text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
 footer{border-top:1px solid var(--line);padding:22px 0 44px;
   font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--txt-3);letter-spacing:.05em}
 footer a{color:var(--cyan);text-decoration:none;border-bottom:1px solid rgba(34,211,238,.3)}
 footer a:hover{border-color:var(--cyan)}
+
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
-@media(max-width:640px){.tools{margin-left:0;width:100%}.search{flex:1;width:auto}}
+@media(max-width:640px){
+  .casebar .tools{margin-left:0;width:100%}
+  .search{flex:1;width:auto}
+  .exportrow{grid-template-columns:1fr}
+}
+
 </style>
 </head>
 <body>
@@ -181,27 +325,48 @@ footer a:hover{border-color:var(--cyan)}
   <h1>Insurance Fraud <span class="lo">Framework</span></h1>
   <p class="sub">An ATT&amp;CK-style model of how insurance fraud actually unfolds &mdash; extending MITRE&rsquo;s Fight Fraud Framework with the <b>staged, induced and paper-based</b> techniques that never touch a server log.</p>
   <div class="stats">
-    <div class="stat"><span class="k">Version</span><span class="v">v0.1 <em>draft</em></span></div>
+    <div class="stat"><span class="k">Version</span><span class="v">v0.2 <em>draft</em></span></div>
     <div class="stat"><span class="k">Built on</span><span class="v">MITRE F3 <i>v1.1</i></span></div>
     <div class="stat"><span class="k">Tactics</span><span class="v">8 <em>(2 new)</em></span></div>
     <div class="stat"><span class="k">Techniques</span><span class="v">38 <em>(30 new)</em></span></div>
   </div>
 </div></header>
 
+<div class="casebar"><div class="wrap">
+  <button class="case-btn" id="openCase">
+    <span>&#128203; Case</span><span class="n" id="caseCount">0</span>
+  </button>
+  <button class="case-btn heat" id="openCov">
+    <span>&#127777; Coverage</span><span class="n" id="covCount" style="background:var(--strong)">0</span>
+  </button>
+  <span class="case-hint" id="caseHint">Click the checkbox on any technique to add it to a case</span>
+  <span class="tools">
+    <input id="search" class="search" type="search" placeholder="search techniques..." aria-label="Search techniques">
+    <button class="tgl heat" id="heatToggle" aria-pressed="false">Heat map</button>
+    <button class="tgl" id="onlyIff" aria-pressed="false">Only new</button>
+  </span>
+</div></div>
+
 <div class="wrap">
-  <div class="bar">
+  <div class="legend" id="legendDefault">
     <span class="chip"><span class="sw c"></span> Inherited from F3 / ATT&amp;CK</span>
     <span class="chip"><span class="sw a"></span> Insurance-specific &mdash; new</span>
-    <span class="tools">
-      <input id="search" class="search" type="search" placeholder="search techniques..." aria-label="Search techniques">
-      <button class="tgl" id="onlyIff" aria-pressed="false">Only new</button>
-    </span>
   </div>
+  <div class="legend" id="legendHeat" style="display:none">
+    <span class="chip"><span class="sw dot none"></span> Not assessed</span>
+    <span class="chip"><span class="sw dot gap"></span> Gap &mdash; no detection</span>
+    <span class="chip"><span class="sw dot partial"></span> Partial coverage</span>
+    <span class="chip"><span class="sw dot strong"></span> Strong coverage</span>
+    <span class="case-hint">Set coverage from a technique&rsquo;s detail panel</span>
+  </div>
+
   <div class="matrix"><div class="grid" id="grid"></div></div>
+
   <p class="note"><strong>How to read this.</strong> Each column is a <em>tactic</em> &mdash; the actor&rsquo;s goal at that stage of the fraud lifecycle. F3 models <strong>cyber-enabled</strong> fraud and stops at the edge of the digital channel. Insurance fraud frequently has no digital channel at all: a staged collision, an inflated garage estimate, a ghost-broked policy. Two tactics here have <strong>no F3 equivalent</strong> &mdash; <code>IFA001 Policy Onboarding</code> (fraud baked in at underwriting) and <code>IFA002 Loss Engineering</code> (manufacturing the insured event itself). Techniques carrying <code>F####</code> or <code>T####</code> IDs are reused directly from F3 / ATT&amp;CK where the behaviour is identical; <code>IF####</code> IDs are new. Illustrative and non-exhaustive &mdash; a strawman to start the conversation, not an official matrix.</p>
 </div>
 
 <div class="scrim" id="scrim"></div>
+
 <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="d-title">
   <div class="dtop">
     <span class="d-id" id="d-id"></span>
@@ -212,7 +377,79 @@ footer a:hover{border-color:var(--cyan)}
   <p class="d-tac" id="d-tac"></p>
   <p class="desc" id="d-desc"></p>
   <div class="d-note" id="d-note" hidden></div>
+
+  <div class="dsection">
+    <label>Detection coverage (this framework instance)</label>
+    <div class="covrow" id="covRow">
+      <button class="covbtn" data-cov="none">Not assessed</button>
+      <button class="covbtn" data-cov="gap">Gap</button>
+      <button class="covbtn" data-cov="partial">Partial</button>
+      <button class="covbtn" data-cov="strong">Strong</button>
+    </div>
+  </div>
+
+  <div class="dsection">
+    <label>Active case</label>
+    <button class="xbtn ghost full" id="dAddCase">Add to case</button>
+  </div>
 </aside>
+
+<aside class="cpanel" id="cpanel" role="dialog" aria-modal="true" aria-labelledby="cp-title">
+  <div class="dtop">
+    <h3 id="cp-title">Case builder</h3>
+    <button class="close" id="cClose" aria-label="Close">&times;</button>
+  </div>
+
+  <div class="caseswitch">
+    <select id="caseSelect" aria-label="Switch case"></select>
+    <button class="iconbtn" id="newCaseBtn" title="New case">+</button>
+    <button class="iconbtn danger" id="delCaseBtn" title="Delete this case">&times;</button>
+  </div>
+  <div class="caselist-meta" id="caseMeta"></div>
+
+  <div class="field"><label for="cName">Case reference</label><input id="cName" type="text" placeholder="e.g. Claim #, SIU case ID"></div>
+  <div class="field"><label for="cAnalyst">Analyst</label><input id="cAnalyst" type="text" placeholder="Your name"></div>
+  <div class="field"><label for="cSummary">Case summary</label><textarea id="cSummary" rows="3" placeholder="Brief description of the case..."></textarea></div>
+
+  <div class="field" style="margin-top:4px">
+    <label>Selected techniques (<span id="cListCount">0</span>)</label>
+    <div class="clist" id="cList"></div>
+  </div>
+
+  <div class="exportrow">
+    <button class="xbtn" id="exJson">Export JSON</button>
+    <button class="xbtn" id="exCsv">Export CSV</button>
+    <button class="xbtn" id="exMd">Export report (.md)</button>
+    <button class="xbtn" id="exPdf">Export PDF</button>
+    <button class="xbtn ghost" id="exNav">Navigator layer</button>
+    <button class="xbtn ghost" id="exLink">Copy share link</button>
+  </div>
+  <p class="exportnote">Navigator layer only includes techniques on a real F3 tactic column &mdash; new <code style="color:var(--amber)">IF####</code> techniques and anything under IFF&rsquo;s two new tactics aren&rsquo;t part of MITRE&rsquo;s published data, but stay fully described in the other exports.</p>
+  <p class="exportnote"><button class="xbtn ghost" id="clearCase" style="margin-top:8px;width:100%">Clear this case</button></p>
+</aside>
+
+<aside class="covpanel" id="covpanel" role="dialog" aria-modal="true" aria-labelledby="cov-title">
+  <div class="dtop">
+    <h3 id="cov-title">Detection coverage</h3>
+    <button class="close" id="covClose" aria-label="Close">&times;</button>
+  </div>
+  <p class="case-hint" style="margin:8px 0 4px">A heat-map layer, separate from any case &mdash; your organisation&rsquo;s ability to detect each technique. Set levels from a technique&rsquo;s detail panel, or turn on <b>Heat map</b> in the toolbar to see it across the matrix.</p>
+
+  <div class="covsummary">
+    <div class="covsum-item gap"><div class="num" id="covNumGap">0</div><div class="lbl">Gap</div></div>
+    <div class="covsum-item partial"><div class="num" id="covNumPartial">0</div><div class="lbl">Partial</div></div>
+    <div class="covsum-item strong"><div class="num" id="covNumStrong">0</div><div class="lbl">Strong</div></div>
+  </div>
+
+  <div class="exportrow" style="grid-template-columns:1fr">
+    <button class="xbtn" id="exCovJson">Export coverage JSON</button>
+    <button class="xbtn ghost" id="exCovNav">Export Navigator layer</button>
+    <button class="xbtn ghost" id="clearCov">Reset all coverage</button>
+  </div>
+  <p class="exportnote">Coverage Navigator layer uses F3&rsquo;s real gradient (red&rarr;amber&rarr;green) and only includes techniques on a real F3 tactic column, for the same reason as the case export.</p>
+</aside>
+
+<div class="toast" id="toast"></div>
 
 <footer><div class="wrap">
   Conceptual draft &middot; structure &amp; inherited techniques &copy; MITRE F3 (Apache-2.0) &middot; official framework at <a href="https://ctid.mitre.org/fraud">ctid.mitre.org/fraud</a>
@@ -220,8 +457,20 @@ footer a:hover{border-color:var(--cyan)}
 
 <script>
 const DATA = {"meta": {"name": "Insurance Fraud Framework (IFF)", "shortName": "IFF", "version": "0.1 (draft)", "basedOn": "MITRE Fight Fraud Framework (F3) v1.1", "note": "A conceptual, ATT&CK-style taxonomy for insurance fraud that extends F3's cyber-fraud lifecycle with the non-digital techniques that dominate real-world insurance fraud. Illustrative and non-exhaustive. IF#### IDs denote insurance-specific techniques; F#### and T#### IDs are reused directly from F3 / MITRE ATT&CK where the behaviour is identical."}, "tactics": [{"id": "TA0043", "name": "Reconnaissance", "source": "f3", "desc": "Gathering information to plan a fraudulent claim or scheme — target policies, coverage limits, claims-handling processes, and the identities or assets to be exploited."}, {"id": "TA0042", "name": "Resource Development", "source": "f3", "desc": "Establishing the identities, documents, staged conditions, and complicit parties needed to execute the fraud."}, {"id": "IFA001", "name": "Policy Onboarding", "source": "iff", "desc": "Obtaining or manipulating a policy so that a future claim can be made — the insurance analogue of Initial Access. Fraud may be baked in at application (application fraud) or the policy may be legitimate and later abused."}, {"id": "IFA002", "name": "Loss Engineering", "source": "iff", "desc": "Creating, staging, inducing, or fabricating the insured event itself. This is the tactic with no equivalent in F3: the fraud actor manufactures the loss rather than compromising a system."}, {"id": "TA0005", "name": "Stealth", "source": "f3", "desc": "Actions to make the claim appear legitimate and avoid triggering fraud indicators, SIU referral, or watchlist matches."}, {"id": "IFA003", "name": "Claim Submission", "source": "iff", "desc": "Lodging the claim and supporting evidence with the insurer — the execution stage where the fraudulent demand is formally made."}, {"id": "IFA004", "name": "Claim Maximisation", "source": "iff", "desc": "Inflating, padding, or extending a claim — whether the underlying loss is genuine or fabricated — to increase the payout."}, {"id": "FA0002", "name": "Monetization", "source": "f3", "desc": "Converting the settlement into usable value and, where organised, laundering or distributing proceeds among participants."}], "techniques": [{"id": "IF1001", "name": "Coverage & Limit Probing", "tactic": "TA0043", "source": "iff", "desc": "Querying policy terms, excesses, and payout limits (via the policyholder, an agent, or public product data) to design a claim that sits below scrutiny thresholds or maximises recovery."}, {"id": "IF1002", "name": "Claims Process Mapping", "tactic": "TA0043", "source": "iff", "desc": "Learning an insurer's triage, evidence, and settlement workflow — including which loss values or claim types are fast-tracked without investigation.", "note": "Insurance analogue of F3's Interactive Voice Response Mapping (F1034)."}, {"id": "IF1003", "name": "Target Selection", "tactic": "TA0043", "source": "iff", "desc": "Identifying vulnerable claimants, high-value assets, or lightly-underwritten products; in staged-accident rings, selecting innocent third parties (e.g. by vehicle type) to serve as at-fault victims."}, {"id": "F1029", "name": "Gather Customer Information", "tactic": "TA0043", "source": "f3", "desc": "Collecting personal data on a genuine policyholder to enable impersonation or an identity-based claim."}, {"id": "IF1010", "name": "Synthetic / Stolen Identity Setup", "tactic": "TA0042", "source": "iff", "desc": "Building or acquiring identities to take out policies or file claims that cannot be traced to the real actor. Overlaps with cyber synthetic-identity fraud but frequently paper-based in insurance."}, {"id": "IF1011", "name": "Ghost Broking", "tactic": "TA0042", "source": "iff", "desc": "A fake or complicit intermediary sells policies that are forged, altered after purchase, or taken out with falsified details — the victim believes they are insured while the broker pockets the premium or enables downstream claims."}, {"id": "IF1012", "name": "Recruit Complicit Professionals", "tactic": "TA0042", "source": "iff", "desc": "Enlisting doctors, garages, loss adjusters, lawyers, or repairers to provide false reports, inflated estimates, or fabricated treatment records."}, {"id": "IF1013", "name": "Recruit Participants", "tactic": "TA0042", "source": "iff", "desc": "Enlisting willing claimants, 'crash-for-cash' drivers, phantom passengers, or false witnesses; may involve coercion or paid stand-ins."}, {"id": "IF1014", "name": "Stage Physical Assets", "tactic": "TA0042", "source": "iff", "desc": "Acquiring or preparing vehicles, property, or goods to be damaged, destroyed, or falsely reported as lost."}, {"id": "F1020", "name": "Create Fake Materials", "tactic": "TA0042", "source": "f3", "desc": "Producing forged documents (receipts, valuations, ID, medical notes) or fake websites to support the scheme."}, {"id": "F1027", "name": "Falsify Business Documents", "tactic": "TA0042", "source": "f3", "desc": "Creating or altering invoices, repair estimates, or company records that underpin a fraudulent claim."}, {"id": "IF1020", "name": "Application Fraud (Fronting/Misrepresentation)", "tactic": "IFA001", "source": "iff", "desc": "Providing false information at underwriting — concealing risk, misstating the named driver ('fronting'), understating value, or omitting prior claims — to obtain cover or a lower premium."}, {"id": "IF1021", "name": "Backdated / Post-Loss Cover", "tactic": "IFA001", "source": "iff", "desc": "Taking out or amending a policy after a loss has already occurred and presenting it as pre-existing cover."}, {"id": "IF1022", "name": "Policy Takeover / Amendment Abuse", "tactic": "IFA001", "source": "iff", "desc": "Gaining control of a legitimate policy or altering its details (beneficiary, payout account, insured items) to redirect or enable a claim.", "note": "Insurance analogue of F3's Account Manipulation (F1005)."}, {"id": "F1031", "name": "Impersonate Account Holder", "tactic": "IFA001", "source": "f3", "desc": "Posing as a genuine policyholder to bind cover or take over an existing policy."}, {"id": "IF1030", "name": "Staged Accident", "tactic": "IFA002", "source": "iff", "desc": "Deliberately causing a collision or incident between colluding parties to generate injury and damage claims ('crash for cash', staged slip-and-fall)."}, {"id": "IF1031", "name": "Induced Accident", "tactic": "IFA002", "source": "iff", "desc": "Provoking a genuine but innocent third party into an at-fault collision (e.g. sudden braking) so the victim's insurer pays a fabricated or inflated claim."}, {"id": "IF1032", "name": "Fabricated / Phantom Loss", "tactic": "IFA002", "source": "iff", "desc": "Reporting an event that never happened — a burglary, an injury, a death, or damage to goods that were never lost."}, {"id": "IF1033", "name": "Intentional Destruction", "tactic": "IFA002", "source": "iff", "desc": "Deliberately damaging or destroying an insured asset — arson, deliberate write-off, staged theft-and-dump — to claim its value."}, {"id": "IF1034", "name": "Exaggerated Genuine Loss", "tactic": "IFA002", "source": "iff", "desc": "Starting from a real, minor incident and escalating its scope or severity to justify a larger claim."}, {"id": "IF1035", "name": "Existing-Condition Repackaging", "tactic": "IFA002", "source": "iff", "desc": "Presenting a pre-existing injury, illness, or pre-existing damage as newly caused by the insured event (common in health, PI, and property lines)."}, {"id": "IF1040", "name": "Loss Timeline Manipulation", "tactic": "TA0005", "source": "iff", "desc": "Adjusting reported dates/times so the loss falls within the policy period or after a waiting period lapses."}, {"id": "IF1041", "name": "Claim Splitting / Structuring", "tactic": "TA0005", "source": "iff", "desc": "Breaking one loss into multiple smaller claims — across policies, insurers, or time — to stay under investigation thresholds.", "note": "Insurance analogue of F3's Structuring (F1045)."}, {"id": "IF1042", "name": "SIU / Watchlist Evasion", "tactic": "TA0005", "source": "iff", "desc": "Using clean identities, varied addresses, or new intermediaries to avoid matching known-fraud databases (e.g. shared industry registers)."}, {"id": "IF1043", "name": "Evidence Curation", "tactic": "TA0005", "source": "iff", "desc": "Supplying selectively genuine-looking documentation and suppressing contradictory evidence to pre-empt adjuster questions."}, {"id": "F1032", "name": "Impersonate Official", "tactic": "TA0005", "source": "f3", "desc": "Posing as a legitimate professional (adjuster, medic, official) to lend the claim false credibility."}, {"id": "IF1050", "name": "First-Party Claim Filing", "tactic": "IFA003", "source": "iff", "desc": "The policyholder (or someone posing as them) submits the fraudulent claim under their own cover."}, {"id": "IF1051", "name": "Third-Party Claim Filing", "tactic": "IFA003", "source": "iff", "desc": "A claim is made against another party's policy — the mechanism behind most induced/staged motor fraud."}, {"id": "IF1052", "name": "Multi-Insurer Duplicate Filing", "tactic": "IFA003", "source": "iff", "desc": "Submitting the same loss to more than one insurer to collect multiple settlements."}, {"id": "IF1053", "name": "Fraudulent Supporting Evidence", "tactic": "IFA003", "source": "iff", "desc": "Attaching forged receipts, doctored photos, false medical or repair reports, or fabricated witness statements to the claim."}, {"id": "IF1060", "name": "Claim Padding", "tactic": "IFA004", "source": "iff", "desc": "Adding items, damage, or costs that were not part of the actual loss."}, {"id": "IF1061", "name": "Inflated Valuation", "tactic": "IFA004", "source": "iff", "desc": "Overstating the value of lost or damaged property, or the cost of repair/replacement, often via complicit valuers or garages."}, {"id": "IF1062", "name": "Treatment / Care Inflation", "tactic": "IFA004", "source": "iff", "desc": "Billing for unnecessary, exaggerated, or non-existent medical treatment, rehabilitation, or care (health, PI, workers' comp)."}, {"id": "IF1063", "name": "Prolonged Loss of Use", "tactic": "IFA004", "source": "iff", "desc": "Extending hire-vehicle, business-interruption, or loss-of-earnings periods beyond the genuine impact."}, {"id": "IF1070", "name": "Settlement Collection", "tactic": "FA0002", "source": "iff", "desc": "Receiving the payout — direct to the actor, to a controlled account, or to a complicit third party (garage, clinic, credit-hire firm)."}, {"id": "IF1071", "name": "Proceeds Distribution", "tactic": "FA0002", "source": "iff", "desc": "Splitting the settlement among ring members, recruited participants, and complicit professionals."}, {"id": "F1047", "name": "Transfer of Funds", "tactic": "FA0002", "source": "f3", "desc": "Moving settlement funds through transfers to obscure origin and control."}, {"id": "F1018", "name": "Convert to Cryptocurrency", "tactic": "FA0002", "source": "f3", "desc": "Laundering proceeds via crypto conversion, more common in organised/cyber-enabled rings."}]};
-const grid = document.getElementById('grid');
+/* DATA is injected above this script */
+const techById=Object.fromEntries(DATA.techniques.map(x=>[x.id,x]));
+const tacById=Object.fromEntries(DATA.tactics.map(t=>[t.id,t]));
 
+/* Verified against MITRE F3's own published Navigator layer (f3-navigator.json) —
+   maps each of our tactic IDs to the exact ATT&CK-Navigator tactic shortname F3 uses. */
+const TAC_SHORTNAME={
+  TA0043:'reconnaissance', TA0042:'resource-development', TA0001:'initial-access',
+  TA0005:'stealth', TA0112:'defense-impairment', FA0001:'positioning',
+  TA0002:'execution', FA0002:'monetization'
+};
+const F3_GRADIENT=["#ff6666ff","#ffe766ff","#8ec843ff"];
+
+const grid=document.getElementById('grid');
 DATA.tactics.forEach(t=>{
   const col=document.createElement('div');col.className='col';
   const techs=DATA.techniques.filter(x=>x.tactic===t.id);
@@ -236,16 +485,28 @@ DATA.tactics.forEach(t=>{
     const b=document.createElement('button');
     b.className='tech '+(x.source==='iff'?'iff':'');
     b.dataset.src=x.source;
+    b.dataset.id=x.id;
     b.dataset.search=(x.id+' '+x.name+' '+x.desc).toLowerCase();
-    b.innerHTML=`<span class="id">${x.id}</span><span class="nm">${x.name}</span>`;
-    b.addEventListener('click',()=>openDrawer(x,t));
+    b.innerHTML=`<span class="id">${x.id}</span><span class="nm">${x.name}</span>
+      <span class="pick" title="Add to case"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="covdot" title="Detection coverage"></span>`;
+    b.addEventListener('click',(e)=>{
+      if(e.target.closest('.pick')){ toggleSelect(x.id); }
+      else { openDrawer(x,t); }
+    });
     col.appendChild(b);
   });
   grid.appendChild(col);
 });
 
+/* ================= shared UI: drawer, scrim, search/filter ================= */
 const drawer=document.getElementById('drawer'),scrim=document.getElementById('scrim');
+let currentTechId=null;
+function anyPanelOpen(){
+  return drawer.classList.contains('open')||cpanel.classList.contains('open')||covpanel.classList.contains('open');
+}
 function openDrawer(x,t){
+  currentTechId=x.id;
   const iff=x.source==='iff';
   drawer.classList.toggle('iff',iff);
   document.getElementById('d-id').textContent=x.id;
@@ -257,13 +518,21 @@ function openDrawer(x,t){
   document.getElementById('d-desc').textContent=x.desc;
   const n=document.getElementById('d-note');
   if(x.note){n.innerHTML='<b>Mapping note</b>'+x.note;n.hidden=false;}else{n.hidden=true;}
+  updateAddCaseBtn();
+  renderCovButtons();
   drawer.classList.add('open');scrim.classList.add('open');
   document.getElementById('dClose').focus();
 }
-function closeDrawer(){drawer.classList.remove('open');scrim.classList.remove('open');}
+function closeDrawer(){drawer.classList.remove('open'); if(!anyPanelOpenExcept('drawer'))scrim.classList.remove('open');}
+function anyPanelOpenExcept(which){
+  const d=which==='drawer'?false:drawer.classList.contains('open');
+  const c=which==='cpanel'?false:cpanel.classList.contains('open');
+  const v=which==='covpanel'?false:covpanel.classList.contains('open');
+  return d||c||v;
+}
 document.getElementById('dClose').addEventListener('click',closeDrawer);
-scrim.addEventListener('click',closeDrawer);
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer();});
+scrim.addEventListener('click',()=>{closeDrawer();closeCasePanel();closeCovPanel();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDrawer();closeCasePanel();closeCovPanel();}});
 
 const onlyIff=document.getElementById('onlyIff'),search=document.getElementById('search');
 function applyFilters(){
@@ -281,6 +550,442 @@ onlyIff.addEventListener('click',()=>{
   applyFilters();
 });
 search.addEventListener('input',applyFilters);
+
+const heatToggle=document.getElementById('heatToggle');
+heatToggle.addEventListener('click',()=>{
+  const on=heatToggle.getAttribute('aria-pressed')==='true';
+  heatToggle.setAttribute('aria-pressed',on?'false':'true');
+  document.body.classList.toggle('heatmap',!on);
+  document.getElementById('legendDefault').style.display=on?'flex':'none';
+  document.getElementById('legendHeat').style.display=on?'none':'flex';
+});
+
+let toastTimer;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),2600);
+}
+function download(filename,content,mime){
+  const blob=new Blob([content],{type:mime});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download=filename;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function slugify(s){ return (s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,''); }
+
+/* ================= COVERAGE (global heat-map layer) ================= */
+const COV_KEY='iff-coverage-v1';
+let coverage={}; // { techId: 'gap'|'partial'|'strong' }
+function loadCoverage(){
+  try{ const raw=localStorage.getItem(COV_KEY); if(raw) coverage=JSON.parse(raw); }catch(e){}
+}
+function saveCoverage(){ try{ localStorage.setItem(COV_KEY,JSON.stringify(coverage)); }catch(e){} }
+function setCoverage(id,level){
+  if(level==='none') delete coverage[id]; else coverage[id]=level;
+  saveCoverage(); renderCoverageDots(); renderCovButtons(); renderCovSummary();
+}
+function renderCoverageDots(){
+  document.querySelectorAll('.tech').forEach(el=>{
+    const lvl=coverage[el.dataset.id]||'';
+    el.dataset.cov=lvl||'none';
+    const dot=el.querySelector('.covdot');
+    dot.className='covdot'+(lvl?(' '+lvl):'');
+  });
+}
+function renderCovButtons(){
+  const lvl=coverage[currentTechId]||'none';
+  document.querySelectorAll('#covRow .covbtn').forEach(b=>{
+    b.dataset.active = (b.dataset.cov===lvl) ? 'true':'false';
+  });
+}
+document.getElementById('covRow').addEventListener('click',(e)=>{
+  const btn=e.target.closest('.covbtn'); if(!btn||!currentTechId) return;
+  setCoverage(currentTechId, btn.dataset.cov);
+});
+function renderCovSummary(){
+  const vals=Object.values(coverage);
+  document.getElementById('covCount').textContent=vals.length;
+  document.getElementById('covNumGap').textContent=vals.filter(v=>v==='gap').length;
+  document.getElementById('covNumPartial').textContent=vals.filter(v=>v==='partial').length;
+  document.getElementById('covNumStrong').textContent=vals.filter(v=>v==='strong').length;
+}
+const covpanel=document.getElementById('covpanel');
+function openCovPanel(){ renderCovSummary(); covpanel.classList.add('open'); scrim.classList.add('open'); }
+function closeCovPanel(){ covpanel.classList.remove('open'); if(!anyPanelOpenExcept('covpanel')) scrim.classList.remove('open'); }
+document.getElementById('openCov').addEventListener('click',openCovPanel);
+document.getElementById('covClose').addEventListener('click',closeCovPanel);
+document.getElementById('clearCov').addEventListener('click',()=>{
+  if(!confirm('Reset detection coverage for every technique?'))return;
+  coverage={}; saveCoverage(); renderCoverageDots(); renderCovButtons(); renderCovSummary();
+  showToast('Coverage reset');
+});
+
+function buildNavigatorLayer({name,description,scoreFn,colorFn,gradient}){
+  // Only techniques whose tactic has a real F3/ATT&CK Navigator shortname can be placed in a
+  // Navigator layer. This excludes both new IF#### techniques AND any inherited F3 technique
+  // (e.g. F1031) that we've placed under one of our two new insurance-only tactics — those
+  // tactic columns don't exist in F3's matrix, so Navigator has nowhere to put them.
+  const included=DATA.techniques.filter(x=>!!TAC_SHORTNAME[x.tactic]);
+  const omitted=DATA.techniques.length-included.length;
+  const techniques=included.map(x=>{
+    const entry={
+      techniqueID:x.id, tactic:TAC_SHORTNAME[x.tactic], enabled:true,
+      metadata:[], links:[], comment:'', showSubtechniques:true
+    };
+    if(scoreFn){ const s=scoreFn(x); if(s!==null) entry.score=s; }
+    if(colorFn){ const c=colorFn(x); if(c) entry.color=c; }
+    return entry;
+  });
+  return {
+    layer:{
+      name, versions:{attack:"17",navigator:"5.3.1",layer:"4.5"}, domain:"f3-financial",
+      description: description + (omitted>0 ? ` (${omitted} technique(s) omitted — either insurance-specific IF#### techniques, or techniques placed under IFF's two new tactics that have no column in MITRE's published F3 matrix.)` : ''),
+      filters:{platforms:["F3"]}, sorting:0,
+      layout:{layout:"side",aggregateFunction:"average",showID:false,showName:true,showAggregateScores:false,countUnscored:false,expandedSubtechniques:"none"},
+      hideDisabled:false,
+      gradient: gradient || {colors:F3_GRADIENT,minValue:0,maxValue:100},
+      legendItems:[{label:"Insurance Fraud Framework overlay",color:"#a78bfa"}],
+      metadata:[{name:"iff_version",value:DATA.meta.version}],
+      links:[], showTacticRowBackground:false, tacticRowBackground:"#dddddd",
+      selectTechniquesAcrossTactics:true, selectSubtechniquesWithParent:false, selectVisibleTechniques:false,
+      techniques
+    },
+    omitted
+  };
+}
+
+document.getElementById('exCovJson').addEventListener('click',()=>{
+  const out={
+    framework:'Insurance Fraud Framework (IFF) — detection coverage',
+    framework_version:DATA.meta.version, exported:new Date().toISOString(),
+    coverage: Object.entries(coverage).map(([id,level])=>{
+      const x=techById[id]; const t=x?tacById[x.tactic]:null;
+      return {id, name:x?x.name:'', tactic:t?t.name:'', source:x?x.source:'', level};
+    })
+  };
+  download('iff-coverage.json', JSON.stringify(out,null,2), 'application/json');
+  showToast('Coverage JSON exported');
+});
+document.getElementById('exCovNav').addEventListener('click',()=>{
+  const {layer,omitted}=buildNavigatorLayer({
+    name:'IFF detection coverage',
+    description:'Insurance Fraud Framework — detection coverage heat-map, scored 0 (gap) to 100 (strong).',
+    scoreFn:(x)=>{ const lvl=coverage[x.id]; if(lvl==='gap')return 0; if(lvl==='partial')return 50; if(lvl==='strong')return 100; return null; }
+  });
+  download('iff-coverage-navigator-layer.json', JSON.stringify(layer,null,2), 'application/json');
+  showToast('Navigator layer exported'+(omitted?` (${omitted} technique(s) omitted)`:''));
+});
+
+/* ================= CASE LIBRARY (multiple saved cases) ================= */
+const LIB_KEY='iff-cases-v1';
+const ACTIVE_KEY='iff-active-case';
+const OLD_SINGLE_KEY='iff-case-v1'; // v0.1 single-case format, migrated on first load
+let library={}; // { id: {id,ref,analyst,summary,techniques,updated} }
+let activeId=null;
+
+function newCaseObj(seed){
+  const id='c'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+  return Object.assign({id,ref:'',analyst:'',summary:'',techniques:{},updated:Date.now()}, seed||{});
+}
+function loadLibrary(){
+  try{
+    const raw=localStorage.getItem(LIB_KEY);
+    if(raw) library=JSON.parse(raw);
+  }catch(e){}
+  // migrate v0.1 single-case data if present and library is empty
+  if(Object.keys(library).length===0){
+    try{
+      const old=localStorage.getItem(OLD_SINGLE_KEY);
+      if(old){
+        const parsed=JSON.parse(old);
+        const c=newCaseObj({ref:parsed.ref||'',analyst:parsed.analyst||'',summary:parsed.summary||'',techniques:parsed.techniques||{}});
+        library[c.id]=c;
+        localStorage.removeItem(OLD_SINGLE_KEY);
+      }
+    }catch(e){}
+  }
+  if(Object.keys(library).length===0){
+    const c=newCaseObj({});
+    library[c.id]=c;
+  }
+  try{ activeId=localStorage.getItem(ACTIVE_KEY); }catch(e){}
+  if(!activeId || !library[activeId]) activeId=Object.keys(library)[0];
+  saveLibrary();
+}
+function saveLibrary(){
+  try{
+    localStorage.setItem(LIB_KEY,JSON.stringify(library));
+    localStorage.setItem(ACTIVE_KEY,activeId);
+  }catch(e){}
+}
+function activeCase(){ return library[activeId]; }
+
+function toggleSelect(id){
+  const c=activeCase();
+  if(c.techniques.hasOwnProperty(id)) delete c.techniques[id];
+  else c.techniques[id]={notes:''};
+  c.updated=Date.now();
+  saveLibrary(); renderSelection();
+}
+function renderSelection(){
+  const c=activeCase();
+  const ids=Object.keys(c.techniques);
+  document.querySelectorAll('.tech').forEach(el=>{
+    el.classList.toggle('sel', c.techniques.hasOwnProperty(el.dataset.id));
+  });
+  document.getElementById('caseCount').textContent=ids.length;
+  document.getElementById('caseHint').textContent = ids.length
+    ? ids.length+' technique'+(ids.length===1?'':'s')+' tagged to "'+(c.ref||'Untitled case')+'"'
+    : 'Click the checkbox on any technique to add it to a case';
+  renderCaseList();
+  renderCaseSwitcher();
+  if(currentTechId) updateAddCaseBtn();
+}
+function renderCaseList(){
+  const c=activeCase();
+  const list=document.getElementById('cList');
+  const ids=Object.keys(c.techniques);
+  document.getElementById('cListCount').textContent=ids.length;
+  if(!ids.length){ list.innerHTML='<div class="empty">No techniques selected yet</div>'; return; }
+  list.innerHTML='';
+  ids.forEach(id=>{
+    const x=techById[id]; if(!x) return;
+    const t=tacById[x.tactic];
+    const row=document.createElement('div'); row.className='citem';
+    row.innerHTML=`<div class="row">
+        <div><span class="id">${x.id} &middot; ${t?t.name:''}</span><div class="nm">${x.name}</div></div>
+        <button class="rm" title="Remove" data-id="${id}">&times;</button>
+      </div>
+      <textarea placeholder="Notes for this technique in this case..." data-id="${id}">${c.techniques[id].notes||''}</textarea>`;
+    list.appendChild(row);
+  });
+  list.querySelectorAll('.rm').forEach(b=>b.addEventListener('click',()=>{toggleSelect(b.dataset.id);}));
+  list.querySelectorAll('textarea').forEach(ta=>ta.addEventListener('input',()=>{
+    activeCase().techniques[ta.dataset.id].notes=ta.value; activeCase().updated=Date.now(); saveLibrary();
+  }));
+}
+function renderCaseSwitcher(){
+  const sel=document.getElementById('caseSelect');
+  const prev=sel.value;
+  sel.innerHTML='';
+  Object.values(library).sort((a,b)=>b.updated-a.updated).forEach(c=>{
+    const opt=document.createElement('option');
+    opt.value=c.id;
+    const n=Object.keys(c.techniques).length;
+    opt.textContent=(c.ref||'Untitled case')+' — '+n+' technique'+(n===1?'':'s');
+    sel.appendChild(opt);
+  });
+  sel.value=activeId;
+  document.getElementById('caseMeta').textContent =
+    Object.keys(library).length+' case'+(Object.keys(library).length===1?'':'s')+' saved in this browser';
+}
+document.getElementById('caseSelect').addEventListener('change',(e)=>{
+  activeId=e.target.value; saveLibrary(); openCasePanelFields(); renderSelection();
+});
+document.getElementById('newCaseBtn').addEventListener('click',()=>{
+  const c=newCaseObj({}); library[c.id]=c; activeId=c.id; saveLibrary();
+  openCasePanelFields(); renderSelection();
+  showToast('New case created');
+});
+document.getElementById('delCaseBtn').addEventListener('click',()=>{
+  if(Object.keys(library).length<=1){ showToast("Can't delete your only case"); return; }
+  if(!confirm('Delete case "'+(activeCase().ref||'Untitled case')+'"? This cannot be undone.'))return;
+  delete library[activeId];
+  activeId=Object.keys(library)[0];
+  saveLibrary(); openCasePanelFields(); renderSelection();
+  showToast('Case deleted');
+});
+
+const cpanel=document.getElementById('cpanel');
+function openCasePanelFields(){
+  const c=activeCase();
+  document.getElementById('cName').value=c.ref||'';
+  document.getElementById('cAnalyst').value=c.analyst||'';
+  document.getElementById('cSummary').value=c.summary||'';
+  renderCaseList(); renderCaseSwitcher();
+}
+function openCasePanel(){ openCasePanelFields(); cpanel.classList.add('open'); scrim.classList.add('open'); }
+function closeCasePanel(){ cpanel.classList.remove('open'); if(!anyPanelOpenExcept('cpanel')) scrim.classList.remove('open'); }
+document.getElementById('openCase').addEventListener('click',openCasePanel);
+document.getElementById('cClose').addEventListener('click',closeCasePanel);
+[['cName','ref'],['cAnalyst','analyst'],['cSummary','summary']].forEach(([elId,key])=>{
+  document.getElementById(elId).addEventListener('input',e=>{
+    activeCase()[key]=e.target.value; activeCase().updated=Date.now(); saveLibrary();
+    if(key==='ref'){ renderCaseSwitcher(); document.getElementById('caseHint').textContent=
+      Object.keys(activeCase().techniques).length
+        ? Object.keys(activeCase().techniques).length+' technique(s) tagged to "'+(e.target.value||'Untitled case')+'"'
+        : 'Click the checkbox on any technique to add it to a case'; }
+  });
+});
+document.getElementById('clearCase').addEventListener('click',()=>{
+  if(!confirm('Clear all selected techniques and details for this case?'))return;
+  const c=activeCase(); c.ref=''; c.analyst=''; c.summary=''; c.techniques={}; c.updated=Date.now();
+  saveLibrary(); openCasePanelFields(); renderSelection();
+});
+
+function updateAddCaseBtn(){
+  const btn=document.getElementById('dAddCase');
+  const on=activeCase().techniques.hasOwnProperty(currentTechId);
+  btn.textContent=on?'Remove from case':'Add to case';
+}
+document.getElementById('dAddCase').addEventListener('click',()=>{
+  toggleSelect(currentTechId); updateAddCaseBtn();
+});
+
+/* ---- shared-link loading (case) ---- */
+function loadSharedLinkIfPresent(){
+  const hash=location.hash;
+  if(hash.startsWith('#case=')){
+    try{
+      const decoded=JSON.parse(decodeURIComponent(escape(atob(hash.slice(6)))));
+      const c=newCaseObj({ref:decoded.ref||'',analyst:decoded.analyst||'',summary:decoded.summary||'',techniques:decoded.techniques||{}});
+      library[c.id]=c; activeId=c.id; saveLibrary();
+      history.replaceState(null,'',location.pathname+location.search);
+      showToast('Shared case loaded as a new entry');
+    }catch(e){ /* malformed hash, ignore */ }
+  }
+}
+
+/* ================= EXPORTS (case) ================= */
+function caseBuild(){
+  const c=activeCase();
+  const items=Object.entries(c.techniques).map(([id,meta])=>{
+    const x=techById[id]; const t=x?tacById[x.tactic]:null;
+    return {
+      id, name:x?x.name:'(unknown)', tactic_id:t?t.id:'', tactic:t?t.name:'',
+      source:x?x.source:'', description:x?x.desc:'', mapping_note:x&&x.note?x.note:'',
+      analyst_notes:meta.notes||''
+    };
+  });
+  return {
+    framework:'Insurance Fraud Framework (IFF)', framework_version:DATA.meta.version,
+    based_on:DATA.meta.basedOn, exported:new Date().toISOString(),
+    case:{reference:c.ref||'',analyst:c.analyst||'',summary:c.summary||''},
+    technique_count:items.length, techniques:items
+  };
+}
+function slug(){ const c=activeCase(); return slugify(c.ref)||'iff-case'; }
+
+document.getElementById('exJson').addEventListener('click',()=>{
+  download(slug()+'.json', JSON.stringify(caseBuild(),null,2), 'application/json');
+  showToast('JSON exported');
+});
+document.getElementById('exCsv').addEventListener('click',()=>{
+  const rows=[['id','name','tactic_id','tactic','source','analyst_notes','description']];
+  caseBuild().techniques.forEach(x=>rows.push([x.id,x.name,x.tactic_id,x.tactic,x.source,x.analyst_notes,x.description]));
+  const csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');
+  download(slug()+'.csv', csv, 'text/csv');
+  showToast('CSV exported');
+});
+function buildMarkdown(){
+  const c=caseBuild();
+  let md=`# Insurance Fraud Framework — Case Report\n\n`;
+  md+=`**Reference:** ${c.case.reference||'—'}  \n**Analyst:** ${c.case.analyst||'—'}  \n**Exported:** ${new Date(c.exported).toLocaleString()}  \n**Techniques tagged:** ${c.technique_count}\n\n`;
+  if(c.case.summary) md+=`## Summary\n${c.case.summary}\n\n`;
+  md+=`## Techniques by tactic\n\n`;
+  const byTac={};
+  c.techniques.forEach(x=>{ (byTac[x.tactic]=byTac[x.tactic]||[]).push(x); });
+  Object.entries(byTac).forEach(([tac,items])=>{
+    md+=`### ${tac}\n\n`;
+    items.forEach(x=>{
+      md+=`**${x.id} — ${x.name}** _(${x.source==='iff'?'insurance-specific':'inherited from F3/ATT&CK'})_\n\n`;
+      md+=`${x.description}\n\n`;
+      if(x.analyst_notes) md+=`> Analyst note: ${x.analyst_notes}\n\n`;
+    });
+  });
+  md+=`---\n*Generated from the Insurance Fraud Framework (${c.framework_version}), built on ${c.based_on}.*\n`;
+  return md;
+}
+document.getElementById('exMd').addEventListener('click',()=>{
+  download(slug()+'-report.md', buildMarkdown(), 'text/markdown');
+  showToast('Report exported');
+});
+
+document.getElementById('exPdf').addEventListener('click',()=>{
+  const c=caseBuild();
+  const byTac={};
+  c.techniques.forEach(x=>{ (byTac[x.tactic]=byTac[x.tactic]||[]).push(x); });
+  const win=window.open('','_blank');
+  if(!win){ showToast('Pop-up blocked — allow pop-ups to export PDF'); return; }
+  const esc=s=>String(s||'').replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
+  let body=`<h1>Insurance Fraud Framework — Case Report</h1>
+    <table class="meta">
+      <tr><th>Reference</th><td>${esc(c.case.reference)||'—'}</td></tr>
+      <tr><th>Analyst</th><td>${esc(c.case.analyst)||'—'}</td></tr>
+      <tr><th>Exported</th><td>${new Date(c.exported).toLocaleString()}</td></tr>
+      <tr><th>Techniques tagged</th><td>${c.technique_count}</td></tr>
+    </table>`;
+  if(c.case.summary) body+=`<h2>Summary</h2><p>${esc(c.case.summary)}</p>`;
+  body+=`<h2>Techniques by tactic</h2>`;
+  Object.entries(byTac).forEach(([tac,items])=>{
+    body+=`<h3>${esc(tac)}</h3>`;
+    items.forEach(x=>{
+      body+=`<div class="tech-block">
+        <div class="tt"><span class="tid">${esc(x.id)}</span> ${esc(x.name)}
+          <span class="src">${x.source==='iff'?'insurance-specific':'inherited from F3/ATT&CK'}</span></div>
+        <p>${esc(x.description)}</p>
+        ${x.analyst_notes?`<div class="anote"><b>Analyst note:</b> ${esc(x.analyst_notes)}</div>`:''}
+      </div>`;
+    });
+  });
+  win.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>${esc(c.case.reference)||'IFF Case Report'}</title>
+    <style>
+      body{font-family:Georgia,'Times New Roman',serif;color:#1a1a1a;max-width:760px;margin:40px auto;padding:0 24px;line-height:1.55}
+      h1{font-size:24px;border-bottom:2px solid #1a1a1a;padding-bottom:10px}
+      h2{font-size:17px;margin-top:32px;color:#1a1a1a}
+      h3{font-size:14px;text-transform:uppercase;letter-spacing:.05em;color:#555;margin-top:26px;border-bottom:1px solid #ccc;padding-bottom:4px}
+      table.meta{border-collapse:collapse;margin:16px 0}
+      table.meta th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#666;padding:4px 16px 4px 0;vertical-align:top}
+      table.meta td{padding:4px 0;font-size:14px}
+      .tech-block{margin:14px 0;padding-bottom:14px;border-bottom:1px solid #eee;page-break-inside:avoid}
+      .tt{font-weight:bold;font-size:14.5px}
+      .tid{font-family:monospace;color:#666;margin-right:6px}
+      .src{font-family:monospace;font-size:10px;text-transform:uppercase;color:#888;margin-left:8px;font-weight:normal}
+      .anote{font-size:12.5px;color:#444;background:#f7f7f2;border-left:3px solid #999;padding:6px 10px;margin-top:6px}
+      p{font-size:13.5px}
+      footer{margin-top:40px;font-size:10.5px;color:#888;border-top:1px solid #ccc;padding-top:10px}
+      @media print{ body{margin:0;padding:24px} }
+    </style></head><body>${body}
+    <footer>Generated from the Insurance Fraud Framework (${esc(c.framework_version)}), built on ${esc(c.based_on)}.</footer>
+    </body></html>`);
+  win.document.close();
+  win.onload=()=>{ win.focus(); win.print(); };
+  setTimeout(()=>{ try{win.focus();win.print();}catch(e){} },400);
+  showToast('Opened print view — choose "Save as PDF"');
+});
+
+document.getElementById('exNav').addEventListener('click',()=>{
+  const c=activeCase();
+  const selectedIds=new Set(Object.keys(c.techniques));
+  const {layer,omitted}=buildNavigatorLayer({
+    name:'IFF case — '+(c.ref||'Untitled'),
+    description:'Insurance Fraud Framework — techniques tagged to case "'+(c.ref||'Untitled')+'".',
+    colorFn:(x)=> selectedIds.has(x.id) ? '#a78bfaff' : null,
+    gradient:{colors:["#111826ff","#a78bfaff"],minValue:0,maxValue:1}
+  });
+  download(slugify(c.ref||'iff-case')+'-navigator-layer.json', JSON.stringify(layer,null,2), 'application/json');
+  showToast('Navigator layer exported'+(omitted?` (${omitted} technique(s) omitted)`:''));
+});
+
+document.getElementById('exLink').addEventListener('click',()=>{
+  const c=activeCase();
+  const payload={ref:c.ref,analyst:c.analyst,summary:c.summary,techniques:c.techniques};
+  const encoded=btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+  const url=location.origin+location.pathname+'#case='+encoded;
+  navigator.clipboard.writeText(url).then(()=>showToast('Share link copied to clipboard'))
+    .catch(()=>{ prompt('Copy this link:',url); });
+});
+
+/* ================= init ================= */
+loadCoverage();
+loadLibrary();
+loadSharedLinkIfPresent();
+renderCoverageDots();
+renderSelection();
+
 </script>
 </body>
 </html>
