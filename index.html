@@ -328,10 +328,10 @@ footer a:hover{border-color:var(--cyan)}
   <h1>Insurance Fraud <span class="lo">Framework</span></h1>
   <p class="sub">An ATT&amp;CK-style model of how insurance fraud actually unfolds, extending MITRE&rsquo;s Fight Fraud Framework with the <b>staged, induced and paper-based</b> techniques that never touch a server log.</p>
   <div class="stats">
-    <div class="stat"><span class="k">Version</span><span class="v">v0.3 <em>draft</em></span></div>
+    <div class="stat"><span class="k">Version</span><span class="v">v0.4 <em>draft</em></span></div>
     <div class="stat"><span class="k">Built on</span><span class="v">MITRE F3 <i>v1.1</i></span></div>
     <div class="stat"><span class="k">Tactics</span><span class="v">8 <em>(2 new)</em></span></div>
-    <div class="stat"><span class="k">Techniques</span><span class="v">38 <em>(30 new)</em></span></div>
+    <div class="stat"><span class="k">Techniques</span><span class="v">40 <em>(33 new)</em></span></div>
   </div>
 </div></header>
 
@@ -478,7 +478,7 @@ const DATA = {
  "meta": {
   "name": "Insurance Fraud Framework (IFF)",
   "shortName": "IFF",
-  "version": "0.3 (draft)",
+  "version": "0.4 (draft)",
   "basedOn": "MITRE Fight Fraud Framework (F3) v1.1",
   "note": "A conceptual, ATT&CK-style taxonomy for insurance fraud that extends F3's cyber-fraud lifecycle with the non-digital techniques that dominate real-world insurance fraud. Illustrative and non-exhaustive. IF#### IDs denote insurance-specific techniques; F#### and T#### IDs are reused directly from F3 / MITRE ATT&CK where the behaviour is identical."
  },
@@ -839,6 +839,24 @@ const DATA = {
    "source": "f3",
    "desc": "Laundering proceeds via crypto conversion, more common in organised/cyber-enabled rings.",
    "mitigation": "Treat requests to settle or redirect proceeds via cryptocurrency conversion as elevated risk, given the reduced traceability compared to standard payment rails."
+  },
+  {
+   "id": "IF1064",
+   "name": "Phantom or Inflated Hire",
+   "tactic": "IFA004",
+   "source": "iff",
+   "desc": "Invoicing for a replacement vehicle or credit-hire period that was never actually provided, or systematically inflating hire duration or day-rates through a complicit provider, distinct from a genuine claimant stretching their own hire period.",
+   "note": "Distinct from IF1063 Prolonged Loss of Use: this is provider-side fabrication or systemic inflation, not a claimant extending a genuine hire.",
+   "mitigation": "Cross-check hire invoices against independent evidence of vehicle use (telematics, mileage records, MOT/inspection history) rather than the provider's own paperwork; audit credit-hire providers whose claimed hire durations consistently exceed repair or total-loss timelines across multiple, unrelated claims."
+  },
+  {
+   "id": "IF1065",
+   "name": "Phantom or Inflated Storage & Recovery",
+   "tactic": "IFA004",
+   "source": "iff",
+   "desc": "Invoicing for vehicle storage or recovery that was never provided, or inflating duration and day-rate, often via a storage provider linked to or sharing ownership with the credit-hire company, which deliberately delays release to keep accruing fees on both sides.",
+   "note": "Storage claims typically sit outside standard hire-industry protocols, so they carry less contractual and documentary discipline than credit hire, making inflation easier to sustain.",
+   "mitigation": "Cross-check storage invoices against actual vehicle disposition records (repair sign-off date, total-loss settlement date); flag storage and hire providers that share a registered address, directors, or VAT number, a strong indicator of linked-company fee inflation."
   }
  ]
 };
