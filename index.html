@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+
 :root{
   --bg:#070a10;
   --bg-2:#0c111b;
@@ -317,15 +318,17 @@ footer a:hover{border-color:var(--cyan)}
   .exportrow{grid-template-columns:1fr}
 }
 
+
 </style>
 </head>
 <body>
+
 <header><div class="wrap">
-  <p class="eyebrow">Draft taxonomy &mdash; conceptual extension of MITRE F3</p>
+  <p class="eyebrow">Draft taxonomy, a conceptual extension of MITRE F3</p>
   <h1>Insurance Fraud <span class="lo">Framework</span></h1>
-  <p class="sub">An ATT&amp;CK-style model of how insurance fraud actually unfolds &mdash; extending MITRE&rsquo;s Fight Fraud Framework with the <b>staged, induced and paper-based</b> techniques that never touch a server log.</p>
+  <p class="sub">An ATT&amp;CK-style model of how insurance fraud actually unfolds, extending MITRE&rsquo;s Fight Fraud Framework with the <b>staged, induced and paper-based</b> techniques that never touch a server log.</p>
   <div class="stats">
-    <div class="stat"><span class="k">Version</span><span class="v">v0.2 <em>draft</em></span></div>
+    <div class="stat"><span class="k">Version</span><span class="v">v0.3 <em>draft</em></span></div>
     <div class="stat"><span class="k">Built on</span><span class="v">MITRE F3 <i>v1.1</i></span></div>
     <div class="stat"><span class="k">Tactics</span><span class="v">8 <em>(2 new)</em></span></div>
     <div class="stat"><span class="k">Techniques</span><span class="v">38 <em>(30 new)</em></span></div>
@@ -350,11 +353,11 @@ footer a:hover{border-color:var(--cyan)}
 <div class="wrap">
   <div class="legend" id="legendDefault">
     <span class="chip"><span class="sw c"></span> Inherited from F3 / ATT&amp;CK</span>
-    <span class="chip"><span class="sw a"></span> Insurance-specific &mdash; new</span>
+    <span class="chip"><span class="sw a"></span> Insurance-specific (new)</span>
   </div>
   <div class="legend" id="legendHeat" style="display:none">
     <span class="chip"><span class="sw dot none"></span> Not assessed</span>
-    <span class="chip"><span class="sw dot gap"></span> Gap &mdash; no detection</span>
+    <span class="chip"><span class="sw dot gap"></span> Gap: no detection</span>
     <span class="chip"><span class="sw dot partial"></span> Partial coverage</span>
     <span class="chip"><span class="sw dot strong"></span> Strong coverage</span>
     <span class="case-hint">Set coverage from a technique&rsquo;s detail panel</span>
@@ -362,7 +365,7 @@ footer a:hover{border-color:var(--cyan)}
 
   <div class="matrix"><div class="grid" id="grid"></div></div>
 
-  <p class="note"><strong>How to read this.</strong> Each column is a <em>tactic</em> &mdash; the actor&rsquo;s goal at that stage of the fraud lifecycle. F3 models <strong>cyber-enabled</strong> fraud and stops at the edge of the digital channel. Insurance fraud frequently has no digital channel at all: a staged collision, an inflated garage estimate, a ghost-broked policy. Two tactics here have <strong>no F3 equivalent</strong> &mdash; <code>IFA001 Policy Onboarding</code> (fraud baked in at underwriting) and <code>IFA002 Loss Engineering</code> (manufacturing the insured event itself). Techniques carrying <code>F####</code> or <code>T####</code> IDs are reused directly from F3 / ATT&amp;CK where the behaviour is identical; <code>IF####</code> IDs are new. Illustrative and non-exhaustive &mdash; a strawman to start the conversation, not an official matrix.</p>
+  <p class="note"><strong>How to read this.</strong> Each column is a <em>tactic</em>, the actor&rsquo;s goal at that stage of the fraud lifecycle. F3 models <strong>cyber-enabled</strong> fraud and stops at the edge of the digital channel. Insurance fraud frequently has no digital channel at all: a staged collision, an inflated garage estimate, a ghost-broked policy. Two tactics here have <strong>no F3 equivalent</strong>: <code>IFA001 Policy Onboarding</code> (fraud baked in at underwriting) and <code>IFA002 Loss Engineering</code> (manufacturing the insured event itself). Techniques carrying <code>F####</code> or <code>T####</code> IDs are reused directly from F3 / ATT&amp;CK where the behaviour is identical; <code>IF####</code> IDs are new. Illustrative and non-exhaustive, a strawman to start the conversation, not an official matrix.</p>
 </div>
 
 <div class="scrim" id="scrim"></div>
@@ -377,6 +380,11 @@ footer a:hover{border-color:var(--cyan)}
   <p class="d-tac" id="d-tac"></p>
   <p class="desc" id="d-desc"></p>
   <div class="d-note" id="d-note" hidden></div>
+
+  <div class="dsection">
+    <label>Defence &amp; remediation guidance</label>
+    <p class="desc" id="d-mit" style="margin-bottom:0"></p>
+  </div>
 
   <div class="dsection">
     <label>Detection coverage (this framework instance)</label>
@@ -424,13 +432,13 @@ footer a:hover{border-color:var(--cyan)}
     <button class="xbtn ghost" id="exNav">Navigator layer</button>
     <button class="xbtn ghost" id="exLink">Copy share link</button>
   </div>
-  <p class="exportnote">Navigator layer only includes techniques on a real F3 tactic column &mdash; new <code style="color:var(--amber)">IF####</code> techniques and anything under IFF&rsquo;s two new tactics aren&rsquo;t part of MITRE&rsquo;s published data, but stay fully described in the other exports.</p>
+  <p class="exportnote">Navigator layer only includes techniques on a real F3 tactic column. New <code style="color:var(--amber)">IF####</code> techniques and anything under IFF&rsquo;s two new tactics aren&rsquo;t part of MITRE&rsquo;s published data, but stay fully described in the other exports.</p>
 
   <div class="field" style="margin-top:18px;padding-top:18px;border-top:1px solid var(--line)">
     <label>Import a case</label>
     <input type="file" id="importFile" accept="application/json,.json" style="display:none">
     <button class="xbtn ghost full" id="importJsonBtn">Import JSON&hellip;</button>
-    <p class="exportnote">Loads a previously exported case JSON as a new saved case &mdash; useful for picking up work on a different machine or browser. Also accepts an exported coverage JSON, which merges into your detection coverage instead.</p>
+    <p class="exportnote">Loads a previously exported case JSON as a new saved case, useful for picking up work on a different machine or browser. Also accepts an exported coverage JSON, which merges into your detection coverage instead.</p>
   </div>
 
   <p class="exportnote"><button class="xbtn ghost" id="clearCase" style="margin-top:8px;width:100%">Clear this case</button></p>
@@ -442,7 +450,7 @@ footer a:hover{border-color:var(--cyan)}
     <h3 id="cov-title">Detection coverage</h3>
     <button class="close" id="covClose" aria-label="Close">&times;</button>
   </div>
-  <p class="case-hint" style="margin:8px 0 4px">A heat-map layer, separate from any case &mdash; your organisation&rsquo;s ability to detect each technique. Set levels from a technique&rsquo;s detail panel, or turn on <b>Heat map</b> in the toolbar to see it across the matrix.</p>
+  <p class="case-hint" style="margin:8px 0 4px">A heat-map layer, separate from any case: your organisation&rsquo;s ability to detect each technique. Set levels from a technique&rsquo;s detail panel, or turn on <b>Heat map</b> in the toolbar to see it across the matrix.</p>
 
   <div class="covsummary">
     <div class="covsum-item gap"><div class="num" id="covNumGap">0</div><div class="lbl">Gap</div></div>
@@ -464,13 +472,381 @@ footer a:hover{border-color:var(--cyan)}
   Conceptual draft &middot; structure &amp; inherited techniques &copy; MITRE F3 (Apache-2.0) &middot; official framework at <a href="https://ctid.mitre.org/fraud">ctid.mitre.org/fraud</a>
 </div></footer>
 
+
 <script>
-const DATA = {"meta": {"name": "Insurance Fraud Framework (IFF)", "shortName": "IFF", "version": "0.1 (draft)", "basedOn": "MITRE Fight Fraud Framework (F3) v1.1", "note": "A conceptual, ATT&CK-style taxonomy for insurance fraud that extends F3's cyber-fraud lifecycle with the non-digital techniques that dominate real-world insurance fraud. Illustrative and non-exhaustive. IF#### IDs denote insurance-specific techniques; F#### and T#### IDs are reused directly from F3 / MITRE ATT&CK where the behaviour is identical."}, "tactics": [{"id": "TA0043", "name": "Reconnaissance", "source": "f3", "desc": "Gathering information to plan a fraudulent claim or scheme — target policies, coverage limits, claims-handling processes, and the identities or assets to be exploited."}, {"id": "TA0042", "name": "Resource Development", "source": "f3", "desc": "Establishing the identities, documents, staged conditions, and complicit parties needed to execute the fraud."}, {"id": "IFA001", "name": "Policy Onboarding", "source": "iff", "desc": "Obtaining or manipulating a policy so that a future claim can be made — the insurance analogue of Initial Access. Fraud may be baked in at application (application fraud) or the policy may be legitimate and later abused."}, {"id": "IFA002", "name": "Loss Engineering", "source": "iff", "desc": "Creating, staging, inducing, or fabricating the insured event itself. This is the tactic with no equivalent in F3: the fraud actor manufactures the loss rather than compromising a system."}, {"id": "TA0005", "name": "Stealth", "source": "f3", "desc": "Actions to make the claim appear legitimate and avoid triggering fraud indicators, SIU referral, or watchlist matches."}, {"id": "IFA003", "name": "Claim Submission", "source": "iff", "desc": "Lodging the claim and supporting evidence with the insurer — the execution stage where the fraudulent demand is formally made."}, {"id": "IFA004", "name": "Claim Maximisation", "source": "iff", "desc": "Inflating, padding, or extending a claim — whether the underlying loss is genuine or fabricated — to increase the payout."}, {"id": "FA0002", "name": "Monetization", "source": "f3", "desc": "Converting the settlement into usable value and, where organised, laundering or distributing proceeds among participants."}], "techniques": [{"id": "IF1001", "name": "Coverage & Limit Probing", "tactic": "TA0043", "source": "iff", "desc": "Querying policy terms, excesses, and payout limits (via the policyholder, an agent, or public product data) to design a claim that sits below scrutiny thresholds or maximises recovery."}, {"id": "IF1002", "name": "Claims Process Mapping", "tactic": "TA0043", "source": "iff", "desc": "Learning an insurer's triage, evidence, and settlement workflow — including which loss values or claim types are fast-tracked without investigation.", "note": "Insurance analogue of F3's Interactive Voice Response Mapping (F1034)."}, {"id": "IF1003", "name": "Target Selection", "tactic": "TA0043", "source": "iff", "desc": "Identifying vulnerable claimants, high-value assets, or lightly-underwritten products; in staged-accident rings, selecting innocent third parties (e.g. by vehicle type) to serve as at-fault victims."}, {"id": "F1029", "name": "Gather Customer Information", "tactic": "TA0043", "source": "f3", "desc": "Collecting personal data on a genuine policyholder to enable impersonation or an identity-based claim."}, {"id": "IF1010", "name": "Synthetic / Stolen Identity Setup", "tactic": "TA0042", "source": "iff", "desc": "Building or acquiring identities to take out policies or file claims that cannot be traced to the real actor. Overlaps with cyber synthetic-identity fraud but frequently paper-based in insurance."}, {"id": "IF1011", "name": "Ghost Broking", "tactic": "TA0042", "source": "iff", "desc": "A fake or complicit intermediary sells policies that are forged, altered after purchase, or taken out with falsified details — the victim believes they are insured while the broker pockets the premium or enables downstream claims."}, {"id": "IF1012", "name": "Recruit Complicit Professionals", "tactic": "TA0042", "source": "iff", "desc": "Enlisting doctors, garages, loss adjusters, lawyers, or repairers to provide false reports, inflated estimates, or fabricated treatment records."}, {"id": "IF1013", "name": "Recruit Participants", "tactic": "TA0042", "source": "iff", "desc": "Enlisting willing claimants, 'crash-for-cash' drivers, phantom passengers, or false witnesses; may involve coercion or paid stand-ins."}, {"id": "IF1014", "name": "Stage Physical Assets", "tactic": "TA0042", "source": "iff", "desc": "Acquiring or preparing vehicles, property, or goods to be damaged, destroyed, or falsely reported as lost."}, {"id": "F1020", "name": "Create Fake Materials", "tactic": "TA0042", "source": "f3", "desc": "Producing forged documents (receipts, valuations, ID, medical notes) or fake websites to support the scheme."}, {"id": "F1027", "name": "Falsify Business Documents", "tactic": "TA0042", "source": "f3", "desc": "Creating or altering invoices, repair estimates, or company records that underpin a fraudulent claim."}, {"id": "IF1020", "name": "Application Fraud (Fronting/Misrepresentation)", "tactic": "IFA001", "source": "iff", "desc": "Providing false information at underwriting — concealing risk, misstating the named driver ('fronting'), understating value, or omitting prior claims — to obtain cover or a lower premium."}, {"id": "IF1021", "name": "Backdated / Post-Loss Cover", "tactic": "IFA001", "source": "iff", "desc": "Taking out or amending a policy after a loss has already occurred and presenting it as pre-existing cover."}, {"id": "IF1022", "name": "Policy Takeover / Amendment Abuse", "tactic": "IFA001", "source": "iff", "desc": "Gaining control of a legitimate policy or altering its details (beneficiary, payout account, insured items) to redirect or enable a claim.", "note": "Insurance analogue of F3's Account Manipulation (F1005)."}, {"id": "F1031", "name": "Impersonate Account Holder", "tactic": "IFA001", "source": "f3", "desc": "Posing as a genuine policyholder to bind cover or take over an existing policy."}, {"id": "IF1030", "name": "Staged Accident", "tactic": "IFA002", "source": "iff", "desc": "Deliberately causing a collision or incident between colluding parties to generate injury and damage claims ('crash for cash', staged slip-and-fall)."}, {"id": "IF1031", "name": "Induced Accident", "tactic": "IFA002", "source": "iff", "desc": "Provoking a genuine but innocent third party into an at-fault collision (e.g. sudden braking) so the victim's insurer pays a fabricated or inflated claim."}, {"id": "IF1032", "name": "Fabricated / Phantom Loss", "tactic": "IFA002", "source": "iff", "desc": "Reporting an event that never happened — a burglary, an injury, a death, or damage to goods that were never lost."}, {"id": "IF1033", "name": "Intentional Destruction", "tactic": "IFA002", "source": "iff", "desc": "Deliberately damaging or destroying an insured asset — arson, deliberate write-off, staged theft-and-dump — to claim its value."}, {"id": "IF1034", "name": "Exaggerated Genuine Loss", "tactic": "IFA002", "source": "iff", "desc": "Starting from a real, minor incident and escalating its scope or severity to justify a larger claim."}, {"id": "IF1035", "name": "Existing-Condition Repackaging", "tactic": "IFA002", "source": "iff", "desc": "Presenting a pre-existing injury, illness, or pre-existing damage as newly caused by the insured event (common in health, PI, and property lines)."}, {"id": "IF1040", "name": "Loss Timeline Manipulation", "tactic": "TA0005", "source": "iff", "desc": "Adjusting reported dates/times so the loss falls within the policy period or after a waiting period lapses."}, {"id": "IF1041", "name": "Claim Splitting / Structuring", "tactic": "TA0005", "source": "iff", "desc": "Breaking one loss into multiple smaller claims — across policies, insurers, or time — to stay under investigation thresholds.", "note": "Insurance analogue of F3's Structuring (F1045)."}, {"id": "IF1042", "name": "SIU / Watchlist Evasion", "tactic": "TA0005", "source": "iff", "desc": "Using clean identities, varied addresses, or new intermediaries to avoid matching known-fraud databases (e.g. shared industry registers)."}, {"id": "IF1043", "name": "Evidence Curation", "tactic": "TA0005", "source": "iff", "desc": "Supplying selectively genuine-looking documentation and suppressing contradictory evidence to pre-empt adjuster questions."}, {"id": "F1032", "name": "Impersonate Official", "tactic": "TA0005", "source": "f3", "desc": "Posing as a legitimate professional (adjuster, medic, official) to lend the claim false credibility."}, {"id": "IF1050", "name": "First-Party Claim Filing", "tactic": "IFA003", "source": "iff", "desc": "The policyholder (or someone posing as them) submits the fraudulent claim under their own cover."}, {"id": "IF1051", "name": "Third-Party Claim Filing", "tactic": "IFA003", "source": "iff", "desc": "A claim is made against another party's policy — the mechanism behind most induced/staged motor fraud."}, {"id": "IF1052", "name": "Multi-Insurer Duplicate Filing", "tactic": "IFA003", "source": "iff", "desc": "Submitting the same loss to more than one insurer to collect multiple settlements."}, {"id": "IF1053", "name": "Fraudulent Supporting Evidence", "tactic": "IFA003", "source": "iff", "desc": "Attaching forged receipts, doctored photos, false medical or repair reports, or fabricated witness statements to the claim."}, {"id": "IF1060", "name": "Claim Padding", "tactic": "IFA004", "source": "iff", "desc": "Adding items, damage, or costs that were not part of the actual loss."}, {"id": "IF1061", "name": "Inflated Valuation", "tactic": "IFA004", "source": "iff", "desc": "Overstating the value of lost or damaged property, or the cost of repair/replacement, often via complicit valuers or garages."}, {"id": "IF1062", "name": "Treatment / Care Inflation", "tactic": "IFA004", "source": "iff", "desc": "Billing for unnecessary, exaggerated, or non-existent medical treatment, rehabilitation, or care (health, PI, workers' comp)."}, {"id": "IF1063", "name": "Prolonged Loss of Use", "tactic": "IFA004", "source": "iff", "desc": "Extending hire-vehicle, business-interruption, or loss-of-earnings periods beyond the genuine impact."}, {"id": "IF1070", "name": "Settlement Collection", "tactic": "FA0002", "source": "iff", "desc": "Receiving the payout — direct to the actor, to a controlled account, or to a complicit third party (garage, clinic, credit-hire firm)."}, {"id": "IF1071", "name": "Proceeds Distribution", "tactic": "FA0002", "source": "iff", "desc": "Splitting the settlement among ring members, recruited participants, and complicit professionals."}, {"id": "F1047", "name": "Transfer of Funds", "tactic": "FA0002", "source": "f3", "desc": "Moving settlement funds through transfers to obscure origin and control."}, {"id": "F1018", "name": "Convert to Cryptocurrency", "tactic": "FA0002", "source": "f3", "desc": "Laundering proceeds via crypto conversion, more common in organised/cyber-enabled rings."}]};
+const DATA = {
+ "meta": {
+  "name": "Insurance Fraud Framework (IFF)",
+  "shortName": "IFF",
+  "version": "0.3 (draft)",
+  "basedOn": "MITRE Fight Fraud Framework (F3) v1.1",
+  "note": "A conceptual, ATT&CK-style taxonomy for insurance fraud that extends F3's cyber-fraud lifecycle with the non-digital techniques that dominate real-world insurance fraud. Illustrative and non-exhaustive. IF#### IDs denote insurance-specific techniques; F#### and T#### IDs are reused directly from F3 / MITRE ATT&CK where the behaviour is identical."
+ },
+ "tactics": [
+  {
+   "id": "TA0043",
+   "name": "Reconnaissance",
+   "source": "f3",
+   "desc": "Gathering information to plan a fraudulent claim or scheme: target policies, coverage limits, claims-handling processes, and the identities or assets to be exploited."
+  },
+  {
+   "id": "TA0042",
+   "name": "Resource Development",
+   "source": "f3",
+   "desc": "Establishing the identities, documents, staged conditions, and complicit parties needed to execute the fraud."
+  },
+  {
+   "id": "IFA001",
+   "name": "Policy Onboarding",
+   "source": "iff",
+   "desc": "Obtaining or manipulating a policy so that a future claim can be made, the insurance analogue of Initial Access. Fraud may be baked in at application (application fraud) or the policy may be legitimate and later abused."
+  },
+  {
+   "id": "IFA002",
+   "name": "Loss Engineering",
+   "source": "iff",
+   "desc": "Creating, staging, inducing, or fabricating the insured event itself. This is the tactic with no equivalent in F3: the fraud actor manufactures the loss rather than compromising a system."
+  },
+  {
+   "id": "TA0005",
+   "name": "Stealth",
+   "source": "f3",
+   "desc": "Actions to make the claim appear legitimate and avoid triggering fraud indicators, SIU referral, or watchlist matches."
+  },
+  {
+   "id": "IFA003",
+   "name": "Claim Submission",
+   "source": "iff",
+   "desc": "Lodging the claim and supporting evidence with the insurer, the stage where the fraudulent demand is formally made."
+  },
+  {
+   "id": "IFA004",
+   "name": "Claim Maximisation",
+   "source": "iff",
+   "desc": "Inflating, padding, or extending a claim, whether the underlying loss is genuine or fabricated, to increase the payout."
+  },
+  {
+   "id": "FA0002",
+   "name": "Monetization",
+   "source": "f3",
+   "desc": "Converting the settlement into usable value and, where organised, laundering or distributing proceeds among participants."
+  }
+ ],
+ "techniques": [
+  {
+   "id": "IF1001",
+   "name": "Coverage & Limit Probing",
+   "tactic": "TA0043",
+   "source": "iff",
+   "desc": "Querying policy terms, excesses, and payout limits (via the policyholder, an agent, or public product data) to design a claim that sits below scrutiny thresholds or maximises recovery.",
+   "mitigation": "Avoid publishing granular excess/limit tables outside the point of sale. Flag repeated pre-sale coverage queries against the same details from different channels as a linkage signal."
+  },
+  {
+   "id": "IF1002",
+   "name": "Claims Process Mapping",
+   "tactic": "TA0043",
+   "source": "iff",
+   "desc": "Learning an insurer's triage, evidence, and settlement workflow, including which loss values or claim types are fast-tracked without investigation.",
+   "note": "Insurance analogue of F3's Interactive Voice Response Mapping (F1034).",
+   "mitigation": "Vary fast-track thresholds periodically and don't disclose them publicly. Monitor for claims that cluster just under known auto-approval limits."
+  },
+  {
+   "id": "IF1003",
+   "name": "Target Selection",
+   "tactic": "TA0043",
+   "source": "iff",
+   "desc": "Identifying vulnerable claimants, high-value assets, or lightly-underwritten products; in staged-accident rings, selecting innocent third parties (e.g. by vehicle type) to serve as at-fault victims.",
+   "mitigation": "Limit how much claims-handling logic is discoverable externally (broker scripts, FAQ pages, complaint-handling case studies). Treat unusual interest in process detail from non-customers as a CTI signal."
+  },
+  {
+   "id": "F1029",
+   "name": "Gather Customer Information",
+   "tactic": "TA0043",
+   "source": "f3",
+   "desc": "Collecting personal data on a genuine policyholder to enable impersonation or an identity-based claim.",
+   "mitigation": "Apply the same customer-data protections used against account takeover in banking: mask full personal details in agent-facing screens where not operationally needed, log access to customer records."
+  },
+  {
+   "id": "IF1010",
+   "name": "Synthetic / Stolen Identity Setup",
+   "tactic": "TA0042",
+   "source": "iff",
+   "desc": "Building or acquiring identities to take out policies or file claims that cannot be traced to the real actor. Overlaps with cyber synthetic-identity fraud but frequently paper-based in insurance.",
+   "mitigation": "Run identity checks against death, fraud, and PEP registers at quote stage, not just at claim stage. Cross-check application details against known synthetic-identity indicators (recently created email/phone, no digital footprint)."
+  },
+  {
+   "id": "IF1011",
+   "name": "Ghost Broking",
+   "tactic": "TA0042",
+   "source": "iff",
+   "desc": "A fake or complicit intermediary sells policies that are forged, altered after purchase, or taken out with falsified details. The victim believes they are insured while the broker pockets the premium or enables downstream claims.",
+   "mitigation": "Verify broker/intermediary FCA (or local equivalent) registration at policy issuance and renewal. Give customers a direct way to confirm their policy exists on the insurer's own system, independent of the broker."
+  },
+  {
+   "id": "IF1012",
+   "name": "Recruit Complicit Professionals",
+   "tactic": "TA0042",
+   "source": "iff",
+   "desc": "Enlisting doctors, garages, loss adjusters, lawyers, or repairers to provide false reports, inflated estimates, or fabricated treatment records.",
+   "mitigation": "Rotate approved repairer/medical panels and audit referral concentration; a disproportionate share of claims routed to one garage or clinic is a strong signal. Cross-insurer intelligence sharing (e.g. via IFB) surfaces professionals appearing across multiple suspicious claims."
+  },
+  {
+   "id": "IF1013",
+   "name": "Recruit Participants",
+   "tactic": "TA0042",
+   "source": "iff",
+   "desc": "Enlisting willing claimants, 'crash-for-cash' drivers, phantom passengers, or false witnesses; may involve coercion or paid stand-ins.",
+   "mitigation": "Look for repeat claimant/witness/passenger combinations across ostensibly unrelated claims and across insurers where data-sharing permits it."
+  },
+  {
+   "id": "IF1014",
+   "name": "Stage Physical Assets",
+   "tactic": "TA0042",
+   "source": "iff",
+   "desc": "Acquiring or preparing vehicles, property, or goods to be damaged, destroyed, or falsely reported as lost.",
+   "mitigation": "For high-value or repeat claims involving specific asset types, corroborate provenance (purchase records, VIN history, registration continuity) before indemnity."
+  },
+  {
+   "id": "F1020",
+   "name": "Create Fake Materials",
+   "tactic": "TA0042",
+   "source": "f3",
+   "desc": "Producing forged documents (receipts, valuations, ID, medical notes) or fake websites to support the scheme.",
+   "mitigation": "Validate supporting documents against independent sources (issuing authority checks, garage/clinic verification calls) rather than accepting them at face value, especially for higher-value or first-notification claims."
+  },
+  {
+   "id": "F1027",
+   "name": "Falsify Business Documents",
+   "tactic": "TA0042",
+   "source": "f3",
+   "desc": "Creating or altering invoices, repair estimates, or company records that underpin a fraudulent claim.",
+   "mitigation": "Cross-check submitted invoices and estimates against typical market rates and the vendor's registered business details; sudden invoice-value inflation from a previously consistent vendor is a red flag."
+  },
+  {
+   "id": "IF1020",
+   "name": "Application Fraud (Fronting/Misrepresentation)",
+   "tactic": "IFA001",
+   "source": "iff",
+   "desc": "Providing false information at underwriting: concealing risk, misstating the named driver ('fronting'), understating value, or omitting prior claims, in order to obtain cover or a lower premium.",
+   "mitigation": "Validate declared risk facts (named driver, usage, location, prior claims history) against third-party data sources at quote stage rather than relying solely on self-declaration."
+  },
+  {
+   "id": "IF1021",
+   "name": "Backdated / Post-Loss Cover",
+   "tactic": "IFA001",
+   "source": "iff",
+   "desc": "Taking out or amending a policy after a loss has already occurred and presenting it as pre-existing cover.",
+   "mitigation": "Check policy inception timestamps against first notification of loss; flag policies bound or materially amended in the days immediately before a claim."
+  },
+  {
+   "id": "IF1022",
+   "name": "Policy Takeover / Amendment Abuse",
+   "tactic": "IFA001",
+   "source": "iff",
+   "desc": "Gaining control of a legitimate policy or altering its details (beneficiary, payout account, insured items) to redirect or enable a claim.",
+   "note": "Insurance analogue of F3's Account Manipulation (F1005).",
+   "mitigation": "Require step-up verification for changes to payout account, beneficiary, or contact details, especially shortly before or during a claim. Notify the original policyholder channel of any such change."
+  },
+  {
+   "id": "F1031",
+   "name": "Impersonate Account Holder",
+   "tactic": "IFA001",
+   "source": "f3",
+   "desc": "Posing as a genuine policyholder to bind cover or take over an existing policy.",
+   "mitigation": "Use knowledge-based or biometric verification for high-risk account actions rather than static security questions, which are the most commonly compromised control."
+  },
+  {
+   "id": "IF1030",
+   "name": "Staged Accident",
+   "tactic": "IFA002",
+   "source": "iff",
+   "desc": "Deliberately causing a collision or incident between colluding parties to generate injury and damage claims ('crash for cash', staged slip-and-fall).",
+   "mitigation": "Cross-reference at-fault party details, witnesses, and repairer against known ring indicators; low-speed, rear-end collision patterns with pre-existing whiplash-style injury claims warrant SIU review."
+  },
+  {
+   "id": "IF1031",
+   "name": "Induced Accident",
+   "tactic": "IFA002",
+   "source": "iff",
+   "desc": "Provoking a genuine but innocent third party into an at-fault collision (e.g. sudden braking) so the victim's insurer pays a fabricated or inflated claim.",
+   "mitigation": "Dashcam and telematics evidence requests are disproportionately effective here; insurers increasingly request them as standard on liability disputes involving sudden braking claims."
+  },
+  {
+   "id": "IF1032",
+   "name": "Fabricated / Phantom Loss",
+   "tactic": "IFA002",
+   "source": "iff",
+   "desc": "Reporting an event that never happened: a burglary, an injury, a death, or damage to goods that were never lost.",
+   "mitigation": "Require corroborating evidence (police report reference, third-party witness, forensic marker) for claims above a materiality threshold rather than accepting policyholder testimony alone."
+  },
+  {
+   "id": "IF1033",
+   "name": "Intentional Destruction",
+   "tactic": "IFA002",
+   "source": "iff",
+   "desc": "Deliberately damaging or destroying an insured asset (arson, deliberate write-off, staged theft-and-dump) to claim its value.",
+   "mitigation": "For claims where cause of loss is solely self-reported (fire, theft with no recovery), involve loss adjusters or forensic investigators before indemnity, particularly where the asset was recently over-insured or under financial distress."
+  },
+  {
+   "id": "IF1034",
+   "name": "Exaggerated Genuine Loss",
+   "tactic": "IFA002",
+   "source": "iff",
+   "desc": "Starting from a real, minor incident and escalating its scope or severity to justify a larger claim.",
+   "mitigation": "Compare photographic/damage evidence timestamps and metadata against the reported incident date; escalate claims where damage severity has visibly progressed between notification and assessment."
+  },
+  {
+   "id": "IF1035",
+   "name": "Existing-Condition Repackaging",
+   "tactic": "IFA002",
+   "source": "iff",
+   "desc": "Presenting a pre-existing injury, illness, or pre-existing damage as newly caused by the insured event (common in health, PI, and property lines).",
+   "mitigation": "Request historical medical or maintenance records where consistent with jurisdictional rules, to distinguish aggravation of a pre-existing condition from a new injury."
+  },
+  {
+   "id": "IF1040",
+   "name": "Loss Timeline Manipulation",
+   "tactic": "TA0005",
+   "source": "iff",
+   "desc": "Adjusting reported dates/times so the loss falls within the policy period or after a waiting period lapses.",
+   "mitigation": "Reconcile reported incident timestamps against independent data where available (telematics, CCTV, weather/traffic records, network logs) rather than relying on the claim form alone."
+  },
+  {
+   "id": "IF1041",
+   "name": "Claim Splitting / Structuring",
+   "tactic": "TA0005",
+   "source": "iff",
+   "desc": "Breaking one loss into multiple smaller claims, spread across policies, insurers, or time, to stay under investigation thresholds.",
+   "note": "Insurance analogue of F3's Structuring (F1045).",
+   "mitigation": "Share claims data across insurers and lines of business (subject to permitted data-sharing frameworks) to detect the same loss, claimant, or asset appearing in multiple smaller claims."
+  },
+  {
+   "id": "IF1042",
+   "name": "SIU / Watchlist Evasion",
+   "tactic": "TA0005",
+   "source": "iff",
+   "desc": "Using clean identities, varied addresses, or new intermediaries to avoid matching known-fraud databases (e.g. shared industry registers).",
+   "mitigation": "Regularly refresh SIU watchlists and screen not just claimants but repairers, witnesses, and intermediaries; single-identifier matching (name only) misses aliasing."
+  },
+  {
+   "id": "IF1043",
+   "name": "Evidence Curation",
+   "tactic": "TA0005",
+   "source": "iff",
+   "desc": "Supplying selectively genuine-looking documentation and suppressing contradictory evidence to pre-empt adjuster questions.",
+   "mitigation": "Treat conveniently complete, immediately-available documentation with the same scrutiny as sparse documentation; organised fraud often over-produces evidence to pre-empt questions."
+  },
+  {
+   "id": "F1032",
+   "name": "Impersonate Official",
+   "tactic": "TA0005",
+   "source": "f3",
+   "desc": "Posing as a legitimate professional (adjuster, medic, official) to lend the claim false credibility.",
+   "mitigation": "Verify claimed professional credentials (medical registration numbers, loss adjuster accreditation) directly with the issuing body rather than trusting supplied documentation or letterhead."
+  },
+  {
+   "id": "IF1050",
+   "name": "First-Party Claim Filing",
+   "tactic": "IFA003",
+   "source": "iff",
+   "desc": "The policyholder (or someone posing as them) submits the fraudulent claim under their own cover.",
+   "mitigation": "Standard identity and policy-validity checks at FNOL; flag claims filed immediately after a policy change or shortly after inception."
+  },
+  {
+   "id": "IF1051",
+   "name": "Third-Party Claim Filing",
+   "tactic": "IFA003",
+   "source": "iff",
+   "desc": "A claim is made against another party's policy, the mechanism behind most induced/staged motor fraud.",
+   "mitigation": "Corroborate third-party claims independently rather than relying on the claiming party's account of the at-fault policyholder's admission; request the at-fault policyholder's own statement early."
+  },
+  {
+   "id": "IF1052",
+   "name": "Multi-Insurer Duplicate Filing",
+   "tactic": "IFA003",
+   "source": "iff",
+   "desc": "Submitting the same loss to more than one insurer to collect multiple settlements.",
+   "mitigation": "Participate in cross-insurer claims databases (e.g. CUE in the UK, or equivalent) and screen every claim against them before settlement, not only on suspicion."
+  },
+  {
+   "id": "IF1053",
+   "name": "Fraudulent Supporting Evidence",
+   "tactic": "IFA003",
+   "source": "iff",
+   "desc": "Attaching forged receipts, doctored photos, false medical or repair reports, or fabricated witness statements to the claim.",
+   "mitigation": "Apply document-forensics checks (metadata, font/formatting consistency, reused image detection) to submitted photos and paperwork on claims above a materiality threshold."
+  },
+  {
+   "id": "IF1060",
+   "name": "Claim Padding",
+   "tactic": "IFA004",
+   "source": "iff",
+   "desc": "Adding items, damage, or costs that were not part of the actual loss.",
+   "mitigation": "Itemise and independently price claimed contents/damage rather than accepting a bundled total; request receipts or equivalent proof of ownership for higher-value items."
+  },
+  {
+   "id": "IF1061",
+   "name": "Inflated Valuation",
+   "tactic": "IFA004",
+   "source": "iff",
+   "desc": "Overstating the value of lost or damaged property, or the cost of repair/replacement, often via complicit valuers or garages.",
+   "mitigation": "Obtain independent valuations or use approved-supplier fixed pricing for repairs and replacements rather than relying solely on the claimant's or their chosen vendor's quote."
+  },
+  {
+   "id": "IF1062",
+   "name": "Treatment / Care Inflation",
+   "tactic": "IFA004",
+   "source": "iff",
+   "desc": "Billing for unnecessary, exaggerated, or non-existent medical treatment, rehabilitation, or care (health, PI, workers' comp).",
+   "mitigation": "Apply clinical review (not just paper review) to treatment plans that are disproportionate to the reported mechanism of injury, and audit treatment-provider billing patterns over time."
+  },
+  {
+   "id": "IF1063",
+   "name": "Prolonged Loss of Use",
+   "tactic": "IFA004",
+   "source": "iff",
+   "desc": "Extending hire-vehicle, business-interruption, or loss-of-earnings periods beyond the genuine impact.",
+   "mitigation": "Cap and actively manage credit-hire and business-interruption periods against actual repair timelines rather than the claimant-reported duration; audit suppliers with consistently long durations."
+  },
+  {
+   "id": "IF1070",
+   "name": "Settlement Collection",
+   "tactic": "FA0002",
+   "source": "iff",
+   "desc": "Receiving the payout: direct to the actor, to a controlled account, or to a complicit third party (garage, clinic, credit-hire firm).",
+   "mitigation": "Verify payout account ownership matches the policyholder or an authorised payee before release, and flag late changes to payment details raised in the Positioning phase."
+  },
+  {
+   "id": "IF1071",
+   "name": "Proceeds Distribution",
+   "tactic": "FA0002",
+   "source": "iff",
+   "desc": "Splitting the settlement among ring members, recruited participants, and complicit professionals.",
+   "mitigation": "Where a ring is suspected, trace settlement flows across linked claims for shared bank accounts, addresses, or intermediary fee structures; a strong indicator of organised rather than opportunistic fraud."
+  },
+  {
+   "id": "F1047",
+   "name": "Transfer of Funds",
+   "tactic": "FA0002",
+   "source": "f3",
+   "desc": "Moving settlement funds through transfers to obscure origin and control.",
+   "mitigation": "Apply the same transaction-monitoring thresholds and beneficiary-screening used in banking to large claim payouts, particularly for new payees or first-time large settlements."
+  },
+  {
+   "id": "F1018",
+   "name": "Convert to Cryptocurrency",
+   "tactic": "FA0002",
+   "source": "f3",
+   "desc": "Laundering proceeds via crypto conversion, more common in organised/cyber-enabled rings.",
+   "mitigation": "Treat requests to settle or redirect proceeds via cryptocurrency conversion as elevated risk, given the reduced traceability compared to standard payment rails."
+  }
+ ]
+};
 /* DATA is injected above this script */
 const techById=Object.fromEntries(DATA.techniques.map(x=>[x.id,x]));
 const tacById=Object.fromEntries(DATA.tactics.map(t=>[t.id,t]));
 
-/* Verified against MITRE F3's own published Navigator layer (f3-navigator.json) —
+/* Verified against MITRE F3's own published Navigator layer (f3-navigator.json):
    maps each of our tactic IDs to the exact ATT&CK-Navigator tactic shortname F3 uses. */
 const TAC_SHORTNAME={
   TA0043:'reconnaissance', TA0042:'resource-development', TA0001:'initial-access',
@@ -525,6 +901,7 @@ function openDrawer(x,t){
   src.className='d-src '+(iff?'a':'c');
   document.getElementById('d-tac').innerHTML=`TACTIC &nbsp;<b>${t.name}</b>&nbsp; &middot; &nbsp;${t.id}`;
   document.getElementById('d-desc').textContent=x.desc;
+  document.getElementById('d-mit').textContent=x.mitigation||'No guidance documented yet.';
   const n=document.getElementById('d-note');
   if(x.note){n.innerHTML='<b>Mapping note</b>'+x.note;n.hidden=false;}else{n.hidden=true;}
   updateAddCaseBtn();
@@ -635,7 +1012,7 @@ document.getElementById('clearCov').addEventListener('click',()=>{
 function buildNavigatorLayer({name,description,scoreFn,colorFn,gradient}){
   // Only techniques whose tactic has a real F3/ATT&CK Navigator shortname can be placed in a
   // Navigator layer. This excludes both new IF#### techniques AND any inherited F3 technique
-  // (e.g. F1031) that we've placed under one of our two new insurance-only tactics — those
+  // (e.g. F1031) that we've placed under one of our two new insurance-only tactics; those
   // tactic columns don't exist in F3's matrix, so Navigator has nowhere to put them.
   const included=DATA.techniques.filter(x=>!!TAC_SHORTNAME[x.tactic]);
   const omitted=DATA.techniques.length-included.length;
@@ -651,7 +1028,7 @@ function buildNavigatorLayer({name,description,scoreFn,colorFn,gradient}){
   return {
     layer:{
       name, versions:{attack:"17",navigator:"5.3.1",layer:"4.5"}, domain:"f3-financial",
-      description: description + (omitted>0 ? ` (${omitted} technique(s) omitted — either insurance-specific IF#### techniques, or techniques placed under IFF's two new tactics that have no column in MITRE's published F3 matrix.)` : ''),
+      description: description + (omitted>0 ? ` (${omitted} technique(s) omitted: either insurance-specific IF#### techniques, or techniques placed under IFF's two new tactics that have no column in MITRE's published F3 matrix.)` : ''),
       filters:{platforms:["F3"]}, sorting:0,
       layout:{layout:"side",aggregateFunction:"average",showID:false,showName:true,showAggregateScores:false,countUnscored:false,expandedSubtechniques:"none"},
       hideDisabled:false,
@@ -668,7 +1045,7 @@ function buildNavigatorLayer({name,description,scoreFn,colorFn,gradient}){
 
 document.getElementById('exCovJson').addEventListener('click',()=>{
   const out={
-    framework:'Insurance Fraud Framework (IFF) — detection coverage',
+    framework:'Insurance Fraud Framework (IFF), detection coverage',
     framework_version:DATA.meta.version, exported:new Date().toISOString(),
     coverage: Object.entries(coverage).map(([id,level])=>{
       const x=techById[id]; const t=x?tacById[x.tactic]:null;
@@ -681,7 +1058,7 @@ document.getElementById('exCovJson').addEventListener('click',()=>{
 document.getElementById('exCovNav').addEventListener('click',()=>{
   const {layer,omitted}=buildNavigatorLayer({
     name:'IFF detection coverage',
-    description:'Insurance Fraud Framework — detection coverage heat-map, scored 0 (gap) to 100 (strong).',
+    description:'Insurance Fraud Framework: detection coverage heat-map, scored 0 (gap) to 100 (strong).',
     scoreFn:(x)=>{ const lvl=coverage[x.id]; if(lvl==='gap')return 0; if(lvl==='partial')return 50; if(lvl==='strong')return 100; return null; }
   });
   download('iff-coverage-navigator-layer.json', JSON.stringify(layer,null,2), 'application/json');
@@ -784,7 +1161,7 @@ function renderCaseSwitcher(){
     const opt=document.createElement('option');
     opt.value=c.id;
     const n=Object.keys(c.techniques).length;
-    opt.textContent=(c.ref||'Untitled case')+' — '+n+' technique'+(n===1?'':'s');
+    opt.textContent=(c.ref||'Untitled case')+' (' +n+' technique'+(n===1?'':'s')+')';
     sel.appendChild(opt);
   });
   sel.value=activeId;
@@ -844,7 +1221,7 @@ importFile.addEventListener('change',(e)=>{
   reader.onload=()=>{
     let data;
     try{ data=JSON.parse(reader.result); }
-    catch(err){ showToast('Could not read that file — not valid JSON'); importFile.value=''; return; }
+    catch(err){ showToast('Could not read that file, not valid JSON'); importFile.value=''; return; }
 
     if(Array.isArray(data.coverage)){
       // coverage export format
@@ -854,7 +1231,7 @@ importFile.addEventListener('change',(e)=>{
         else skipped++;
       });
       saveCoverage(); renderCoverageDots(); renderCovButtons(); renderCovSummary();
-      showToast(`Coverage imported — ${applied} set${skipped?`, ${skipped} skipped`:''}`);
+      showToast(`Coverage imported: ${applied} set${skipped?`, ${skipped} skipped`:''}`);
     } else if(data.case && Array.isArray(data.techniques)){
       // case export format
       const techniques={}; let applied=0, skipped=0;
@@ -870,9 +1247,9 @@ importFile.addEventListener('change',(e)=>{
       });
       library[c.id]=c; activeId=c.id; saveLibrary();
       openCasePanelFields(); renderSelection();
-      showToast(`Case imported — ${applied} technique(s)${skipped?`, ${skipped} unrecognised`:''}`);
+      showToast(`Case imported: ${applied} technique(s)${skipped?`, ${skipped} unrecognised`:''}`);
     } else {
-      showToast('Unrecognised file — expected an IFF case or coverage export');
+      showToast('Unrecognised file, expected an IFF case or coverage export');
     }
     importFile.value='';
   };
@@ -922,7 +1299,7 @@ function caseBuild(){
     return {
       id, name:x?x.name:'(unknown)', tactic_id:t?t.id:'', tactic:t?t.name:'',
       source:x?x.source:'', description:x?x.desc:'', mapping_note:x&&x.note?x.note:'',
-      analyst_notes:meta.notes||''
+      mitigation:x?x.mitigation||'':'', analyst_notes:meta.notes||''
     };
   });
   return {
@@ -939,16 +1316,16 @@ document.getElementById('exJson').addEventListener('click',()=>{
   showToast('JSON exported');
 });
 document.getElementById('exCsv').addEventListener('click',()=>{
-  const rows=[['id','name','tactic_id','tactic','source','analyst_notes','description']];
-  caseBuild().techniques.forEach(x=>rows.push([x.id,x.name,x.tactic_id,x.tactic,x.source,x.analyst_notes,x.description]));
+  const rows=[['id','name','tactic_id','tactic','source','analyst_notes','description','mitigation']];
+  caseBuild().techniques.forEach(x=>rows.push([x.id,x.name,x.tactic_id,x.tactic,x.source,x.analyst_notes,x.description,x.mitigation]));
   const csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');
   download(slug()+'.csv', csv, 'text/csv');
   showToast('CSV exported');
 });
 function buildMarkdown(){
   const c=caseBuild();
-  let md=`# Insurance Fraud Framework — Case Report\n\n`;
-  md+=`**Reference:** ${c.case.reference||'—'}  \n**Analyst:** ${c.case.analyst||'—'}  \n**Exported:** ${new Date(c.exported).toLocaleString()}  \n**Techniques tagged:** ${c.technique_count}\n\n`;
+  let md=`# Insurance Fraud Framework: Case Report\n\n`;
+  md+=`**Reference:** ${c.case.reference||'N/A'}  \n**Analyst:** ${c.case.analyst||'N/A'}  \n**Exported:** ${new Date(c.exported).toLocaleString()}  \n**Techniques tagged:** ${c.technique_count}\n\n`;
   if(c.case.summary) md+=`## Summary\n${c.case.summary}\n\n`;
   md+=`## Techniques by tactic\n\n`;
   const byTac={};
@@ -956,8 +1333,9 @@ function buildMarkdown(){
   Object.entries(byTac).forEach(([tac,items])=>{
     md+=`### ${tac}\n\n`;
     items.forEach(x=>{
-      md+=`**${x.id} — ${x.name}** _(${x.source==='iff'?'insurance-specific':'inherited from F3/ATT&CK'})_\n\n`;
+      md+=`**${x.id}: ${x.name}** _(${x.source==='iff'?'insurance-specific':'inherited from F3/ATT&CK'})_\n\n`;
       md+=`${x.description}\n\n`;
+      if(x.mitigation) md+=`_Defence guidance: ${x.mitigation}_\n\n`;
       if(x.analyst_notes) md+=`> Analyst note: ${x.analyst_notes}\n\n`;
     });
   });
@@ -974,12 +1352,12 @@ document.getElementById('exPdf').addEventListener('click',()=>{
   const byTac={};
   c.techniques.forEach(x=>{ (byTac[x.tactic]=byTac[x.tactic]||[]).push(x); });
   const win=window.open('','_blank');
-  if(!win){ showToast('Pop-up blocked — allow pop-ups to export PDF'); return; }
+  if(!win){ showToast('Pop-up blocked, allow pop-ups to export PDF'); return; }
   const esc=s=>String(s||'').replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
-  let body=`<h1>Insurance Fraud Framework — Case Report</h1>
+  let body=`<h1>Insurance Fraud Framework: Case Report</h1>
     <table class="meta">
-      <tr><th>Reference</th><td>${esc(c.case.reference)||'—'}</td></tr>
-      <tr><th>Analyst</th><td>${esc(c.case.analyst)||'—'}</td></tr>
+      <tr><th>Reference</th><td>${esc(c.case.reference)||'N/A'}</td></tr>
+      <tr><th>Analyst</th><td>${esc(c.case.analyst)||'N/A'}</td></tr>
       <tr><th>Exported</th><td>${new Date(c.exported).toLocaleString()}</td></tr>
       <tr><th>Techniques tagged</th><td>${c.technique_count}</td></tr>
     </table>`;
@@ -992,6 +1370,7 @@ document.getElementById('exPdf').addEventListener('click',()=>{
         <div class="tt"><span class="tid">${esc(x.id)}</span> ${esc(x.name)}
           <span class="src">${x.source==='iff'?'insurance-specific':'inherited from F3/ATT&CK'}</span></div>
         <p>${esc(x.description)}</p>
+        ${x.mitigation?`<div class="mit"><b>Defence guidance:</b> ${esc(x.mitigation)}</div>`:''}
         ${x.analyst_notes?`<div class="anote"><b>Analyst note:</b> ${esc(x.analyst_notes)}</div>`:''}
       </div>`;
     });
@@ -1010,6 +1389,7 @@ document.getElementById('exPdf').addEventListener('click',()=>{
       .tid{font-family:monospace;color:#666;margin-right:6px}
       .src{font-family:monospace;font-size:10px;text-transform:uppercase;color:#888;margin-left:8px;font-weight:normal}
       .anote{font-size:12.5px;color:#444;background:#f7f7f2;border-left:3px solid #999;padding:6px 10px;margin-top:6px}
+      .mit{font-size:12.5px;color:#333;background:#eef4ee;border-left:3px solid #6a9c6a;padding:6px 10px;margin-top:8px}
       p{font-size:13.5px}
       footer{margin-top:40px;font-size:10.5px;color:#888;border-top:1px solid #ccc;padding-top:10px}
       @media print{ body{margin:0;padding:24px} }
@@ -1019,15 +1399,15 @@ document.getElementById('exPdf').addEventListener('click',()=>{
   win.document.close();
   win.onload=()=>{ win.focus(); win.print(); };
   setTimeout(()=>{ try{win.focus();win.print();}catch(e){} },400);
-  showToast('Opened print view — choose "Save as PDF"');
+  showToast('Opened print view, choose "Save as PDF"');
 });
 
 document.getElementById('exNav').addEventListener('click',()=>{
   const c=activeCase();
   const selectedIds=new Set(Object.keys(c.techniques));
   const {layer,omitted}=buildNavigatorLayer({
-    name:'IFF case — '+(c.ref||'Untitled'),
-    description:'Insurance Fraud Framework — techniques tagged to case "'+(c.ref||'Untitled')+'".',
+    name:'IFF case: '+(c.ref||'Untitled'),
+    description:'Insurance Fraud Framework: techniques tagged to case "'+(c.ref||'Untitled')+'".',
     colorFn:(x)=> selectedIds.has(x.id) ? '#a78bfaff' : null,
     gradient:{colors:["#111826ff","#a78bfaff"],minValue:0,maxValue:1}
   });
@@ -1050,6 +1430,7 @@ loadLibrary();
 loadSharedLinkIfPresent();
 renderCoverageDots();
 renderSelection();
+
 
 </script>
 </body>
